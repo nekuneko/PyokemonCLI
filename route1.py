@@ -1,9 +1,9 @@
 import os
 import platform
-import colored
 import copy
 import menu
 from numpy import random
+from fabulous.color import blink, plain
 from colored import fg, bg, attr
 						
 				# 0   1   2   3   4   5   6   7   8   9  10   11  
