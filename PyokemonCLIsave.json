@@ -1,0 +1,295 @@
+{
+  "nombre": "Aura",
+  "genero": 2,
+  "id": 18,
+  "equipo": [
+    {
+      "numero": 383,
+      "nombre": "Groudon",
+      "tipo": 15,
+      "nivel": 100,
+      "id_entrenador": 18,
+      "sexo": 4,
+      "ps": 310,
+      "ataque": 205,
+      "defensa": 305,
+      "ataque_esp": 285,
+      "defensa_esp": 205,
+      "velocidad": 185,
+      "movimientos": [
+        {
+          "nombre": "Terremoto",
+          "tipo": 15,
+          "categoria": 0,
+          "potencia": 100,
+          "precision": 100,
+          "pp": 10
+        },
+        {
+          "nombre": "Estallido",
+          "tipo": 6,
+          "categoria": 1,
+          "potencia": 150,
+          "precision": 100,
+          "pp": 5
+        },
+        {
+          "nombre": "Rayo Carga",
+          "tipo": 4,
+          "categoria": 1,
+          "potencia": 50,
+          "precision": 90,
+          "pp": 10
+        },
+        {
+          "nombre": "-",
+          "tipo": 18,
+          "categoria": 2,
+          "potencia": 0,
+          "precision": 0,
+          "pp": 0
+        }
+      ]
+    },
+    {
+      "numero": 382,
+      "nombre": "Kyogre",
+      "tipo": 1,
+      "nivel": 100,
+      "id_entrenador": 18,
+      "sexo": 4,
+      "ps": 310,
+      "ataque": 205,
+      "defensa": 185,
+      "ataque_esp": 305,
+      "defensa_esp": 285,
+      "velocidad": 185,
+      "movimientos": [
+        {
+          "nombre": "-",
+          "tipo": 18,
+          "categoria": 2,
+          "potencia": 0,
+          "precision": 0,
+          "pp": 0
+        },
+        {
+          "nombre": "-",
+          "tipo": 18,
+          "categoria": 2,
+          "potencia": 0,
+          "precision": 0,
+          "pp": 0
+        },
+        {
+          "nombre": "-",
+          "tipo": 18,
+          "categoria": 2,
+          "potencia": 0,
+          "precision": 0,
+          "pp": 0
+        },
+        {
+          "nombre": "-",
+          "tipo": 18,
+          "categoria": 2,
+          "potencia": 0,
+          "precision": 0,
+          "pp": 0
+        }
+      ]
+    },
+    {
+      "numero": 382,
+      "nombre": "Kyogre",
+      "tipo": 1,
+      "nivel": 100,
+      "id_entrenador": 18,
+      "sexo": 4,
+      "ps": 310,
+      "ataque": 205,
+      "defensa": 185,
+      "ataque_esp": 305,
+      "defensa_esp": 285,
+      "velocidad": 185,
+      "movimientos": [
+        {
+          "nombre": "-",
+          "tipo": 18,
+          "categoria": 2,
+          "potencia": 0,
+          "precision": 0,
+          "pp": 0
+        },
+        {
+          "nombre": "-",
+          "tipo": 18,
+          "categoria": 2,
+          "potencia": 0,
+          "precision": 0,
+          "pp": 0
+        },
+        {
+          "nombre": "-",
+          "tipo": 18,
+          "categoria": 2,
+          "potencia": 0,
+          "precision": 0,
+          "pp": 0
+        },
+        {
+          "nombre": "-",
+          "tipo": 18,
+          "categoria": 2,
+          "potencia": 0,
+          "precision": 0,
+          "pp": 0
+        }
+      ]
+    },
+    {
+      "numero": 1,
+      "nombre": "Bulbasur",
+      "tipo": 11,
+      "nivel": 5,
+      "id_entrenador": 18,
+      "sexo": 1,
+      "ps": 45,
+      "ataque": 49,
+      "defensa": 65,
+      "ataque_esp": 49,
+      "defensa_esp": 65,
+      "velocidad": 45,
+      "movimientos": [
+        {
+          "nombre": "-",
+          "tipo": 18,
+          "categoria": 2,
+          "potencia": 0,
+          "precision": 0,
+          "pp": 0
+        },
+        {
+          "nombre": "-",
+          "tipo": 18,
+          "categoria": 2,
+          "potencia": 0,
+          "precision": 0,
+          "pp": 0
+        },
+        {
+          "nombre": "-",
+          "tipo": 18,
+          "categoria": 2,
+          "potencia": 0,
+          "precision": 0,
+          "pp": 0
+        },
+        {
+          "nombre": "-",
+          "tipo": 18,
+          "categoria": 2,
+          "potencia": 0,
+          "precision": 0,
+          "pp": 0
+        }
+      ]
+    },
+    {
+      "numero": 382,
+      "nombre": "Kyogre",
+      "tipo": 1,
+      "nivel": 100,
+      "id_entrenador": 18,
+      "sexo": 4,
+      "ps": 310,
+      "ataque": 205,
+      "defensa": 185,
+      "ataque_esp": 305,
+      "defensa_esp": 285,
+      "velocidad": 185,
+      "movimientos": [
+        {
+          "nombre": "-",
+          "tipo": 18,
+          "categoria": 2,
+          "potencia": 0,
+          "precision": 0,
+          "pp": 0
+        },
+        {
+          "nombre": "-",
+          "tipo": 18,
+          "categoria": 2,
+          "potencia": 0,
+          "precision": 0,
+          "pp": 0
+        },
+        {
+          "nombre": "-",
+          "tipo": 18,
+          "categoria": 2,
+          "potencia": 0,
+          "precision": 0,
+          "pp": 0
+        },
+        {
+          "nombre": "-",
+          "tipo": 18,
+          "categoria": 2,
+          "potencia": 0,
+          "precision": 0,
+          "pp": 0
+        }
+      ]
+    },
+    {
+      "numero": 382,
+      "nombre": "Kyogre",
+      "tipo": 1,
+      "nivel": 100,
+      "id_entrenador": 18,
+      "sexo": 4,
+      "ps": 310,
+      "ataque": 205,
+      "defensa": 185,
+      "ataque_esp": 305,
+      "defensa_esp": 285,
+      "velocidad": 185,
+      "movimientos": [
+        {
+          "nombre": "-",
+          "tipo": 18,
+          "categoria": 2,
+          "potencia": 0,
+          "precision": 0,
+          "pp": 0
+        },
+        {
+          "nombre": "-",
+          "tipo": 18,
+          "categoria": 2,
+          "potencia": 0,
+          "precision": 0,
+          "pp": 0
+        },
+        {
+          "nombre": "-",
+          "tipo": 18,
+          "categoria": 2,
+          "potencia": 0,
+          "precision": 0,
+          "pp": 0
+        },
+        {
+          "nombre": "-",
+          "tipo": 18,
+          "categoria": 2,
+          "potencia": 0,
+          "precision": 0,
+          "pp": 0
+        }
+      ]
+    }
+  ]
+}
