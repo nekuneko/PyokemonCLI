@@ -10,8 +10,9 @@ pokemon_legendarios = {'moltres', 'zapdos', 'articuno', 'mewtwo', 'mew', 'raikou
 											 'uxie', 'mesprit', 'azelf', 'dialga', 'palkia', 'heatran', 'regigigas',
 											 'giratina', 'cresselia', 'phione', 'manaphy', 'darkrai', 'shaymin', 'arceus'}
 
-pokemon_db = { 0: 'MissingNo.', 1: 'Bulbasur', 382: 'Kyogre', 383: 'Groudon'}
+pokemon_db = { 0: 'MissingNo.', 1: 'Bulbasaur', 382: 'Kyogre', 383: 'Groudon'}
 pokemon_db_t = {0: NORMAL, 1: PLANTA, 382: AGUA, 383: TIERRA}
+
 
 
 def formatearPokemon (pkm):
@@ -171,44 +172,62 @@ class Pokemon:
 
 
 	def atacar (self, Pokemon_rival, int_sel):
-		if (int_sel == -1): # El pokémon usará combate
+		ataques_con_pp = [0, 1, 2, 3]
+
+		# Comprobar ataques sin pp
+		for i in range(0, 4):
+			if (self.movimientos[i].pp == 0):
+				ataques_con_pp.remove(i)
+
+		# Si ningún ataque del pokémon tiene PP, este usará combate
+		if (len(ataques_con_pp) == 0): 
 			mov = movimientos_db['combate']
 		else:
 			mov = self.movimientos[int_sel] # movimiento seleccionado
 
-		# b ni idea
-		# e efectividad
-		# v ni idea
+		
+		if (self.movimientos[int_sel].nombre != '-'): # si no es ataque nulo
+			# b ni idea
+			# e efectividad
+			# v ni idea
 
-		if (mov.tipo == self.tipo):
-			b = 1.5
+			if (mov.tipo == self.tipo):
+				b = 1.5
+			else:
+				b = 1
+			e = TablaEfectividad[mov.tipo][Pokemon_rival.tipo]
+			v = random.randint(85, 101) # Tiene que ser un valor discreto entre 85 y 100
+
+			daño = 0
+			if (mov.categoria == FISICO):
+				daño = int(0.01 * b * e * v * (((0.2 * self.nivel + 1) * self.ataque  * mov.potencia) / (25 * Pokemon_rival.defensa) + 2))
+			elif (mov.categoria == ESPECIAL):
+				daño = int(0.01 * b * e * v * (((0.2 * self.nivel + 1) * self.ataque_esp * mov.potencia) / (25 * Pokemon_rival.defensa_esp) + 2))
+
+			#	print(mov.nombre + " causó " + daño + " puntos de daño.")
+
+
+			# Aplicación del cálculo de daño
+			if (Pokemon_rival.ps <= daño):
+				Pokemon_rival.ps = 0
+			else:
+				Pokemon_rival.ps -= daño
+
+			# Si el ataque no es combate, disminuyen los pp del ataque
+			if (mov.nombre != 'combate'):
+				mov.pp -= 1
+
+
+		# Devuelve el ataque utilizado por el pokémon
+		if (len(ataques_con_pp) == 0):
+			return "combate"
 		else:
-			b = 1
-		e = TablaEfectividad[mov.tipo][Pokemon_rival.tipo]
-		v = random.randint(85, 101) # Tiene que ser un valor discreto entre 85 y 100
+			return str(self.movimientos[int_sel].nombre).lower()
 
-		daño = 0
-		if (mov.categoria == FISICO):
-			daño = int(0.01 * b * e * v * (((0.2 * self.nivel + 1) * self.ataque  * mov.potencia) / (25 * Pokemon_rival.defensa) + 2))
-		elif (mov.categoria == ESPECIAL):
-			daño = int(0.01 * b * e * v * (((0.2 * self.nivel + 1) * self.ataque_esp * mov.potencia) / (25 * Pokemon_rival.defensa_esp) + 2))
-
-		#	print(mov.nombre + " causó " + daño + " puntos de daño.")
-
-
-		# Aplicación del cálculo de daño
-		if (Pokemon_rival.ps <= daño):
-			Pokemon_rival.ps = 0
-		else:
-			Pokemon_rival.ps -= daño
-
-		# Si el ataque no es combate, disminuyen los pp del ataque
-		if (mov.nombre != 'combate'):
-			mov.pp -= 1
 # fed atacar
 
 
-# El ataque se elige de forma automática
+	# El ataque se elige de forma automática
 	def atacarIA (self, Pokemon_rival):
 		ataques_con_pp = [0, 1, 2, 3]
 		
@@ -219,13 +238,14 @@ class Pokemon:
 
 		# Si no hay pp se usará el ataque especial, "combate"
 		if len(ataques_con_pp) == 0:
-			self.atacar(Pokemon_rival, -1)
-			return "combate"
+			return self.atacar(Pokemon_rival, 0)
 		else:
 			# Elegir uno de los ataques disponibles al azar
 			sel = ataques_con_pp[random.randint(0, len(ataques_con_pp))]
-			self.atacar(Pokemon_rival, sel)
-			return str(self.movimientos[sel].nombre).lower()
+			return self.atacar(Pokemon_rival, sel)
+
+		# Devuelve el ataque utilizado por el pokémon
+			
 
 
 	def restaurarPS (self, int_ps = 2000):

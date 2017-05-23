@@ -23,13 +23,13 @@ dic_tipo = {
 	ACERO: 'Acero', AGUA: 'Agua', BICHO: 'Bicho', DRAGON: 'Dragón', ELECTRICO: 'Eléctrico',
 	FANTASMA: 'Fantasma', FUEGO: 'Fuego', HADA: 'Hada', HIELO: 'Hielo', LUCHA: 'Lucha',
 	NORMAL: 'Normal', PLANTA: 'Planta', PSIQUICO: 'Psíquico', ROCA: 'Roca', 
-	SINIESTRO: 'Siniestro', TIERRA: 'Tierra', VENENO: 'Veneno', VOLADOR: 'Volador', NOTIPO: '-'}
+	SINIESTRO: 'Siniestro', TIERRA: 'Tierra', VENENO: 'Veneno', VOLADOR: 'Volador', NOTIPO: ' '}
 
 dic_tipo_inv = {
 	'acero': ACERO, 'agua': AGUA, 'bicho': BICHO,  'dragon': DRAGON, 'electrico': ELECTRICO,
 	'fantasma': FANTASMA, 'fuego': FUEGO, 'hada': HADA, 'hielo': HIELO, 'lucha': LUCHA,
 	'normal': NORMAL, 'planta': PLANTA, 'psiquico': PSIQUICO, 'roca': ROCA, 'siniestro': SINIESTRO,
-	'tierra': TIERRA, 'veneno': VENENO, 'volador': VOLADOR, '-': NOTIPO}
+	'tierra': TIERRA, 'veneno': VENENO, 'volador': VOLADOR, ' ': NOTIPO}
 
 # Categorias de Movimientos
 FISICO 			= 0
@@ -39,12 +39,12 @@ NOCATEGORIA	= 2
 dic_categoria = {
 	FISICO: 		 'Físico',
 	ESPECIAL: 	 'Especial',
-	NOCATEGORIA: '-'}
+	NOCATEGORIA: ' '}
 
 dic_categoria_inv = {
 	'fisico': 	FISICO,
 	'especial': ESPECIAL,
-	'-': 				NOCATEGORIA}
+	' ': 				NOCATEGORIA}
 
 # Género
 HEMBRA		= 0
@@ -58,7 +58,7 @@ dic_genero = {
 	MACHO: 		'♂',
 	CHICA:		'Chica',
 	CHICO: 		'Chico',
-	NOGENERO: '-'}
+	NOGENERO: ' '}
 
 dic_genero_inv = {
 	'♀':			HEMBRA,
@@ -67,7 +67,7 @@ dic_genero_inv = {
 	'macho': 	MACHO,
 	'chica':	CHICA,
 	'chico':  CHICO,
-	'-': 			NOGENERO}
+	' ': 			NOGENERO}
 
 
 dic_sino =  {True: 'Sí', False: 'No'}
