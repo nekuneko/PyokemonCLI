@@ -2,6 +2,9 @@
   "nombre": "Aura",
   "genero": 2,
   "id": 18,
+  "mapa": "route1",
+  "coord_x": 22,
+  "coord_y": 6,
   "equipo": [
     {
       "numero": 383,
@@ -149,7 +152,7 @@
     },
     {
       "numero": 1,
-      "nombre": "Bulbasur",
+      "nombre": "Bulbasaur",
       "tipo": 11,
       "nivel": 5,
       "id_entrenador": 18,
