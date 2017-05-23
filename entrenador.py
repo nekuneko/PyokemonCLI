@@ -14,7 +14,9 @@ def cargarPartida (fichero = "PyokemonCLIsave.json"):
 
 		entrenador = Entrenador(save['nombre'], save['genero'], save['id'], equipo)
 		#print(entrenador)
-	
+		entrenador.mapa = save['mapa']
+		entrenador.x = save['coord_x']
+		entrenador.y = save['coord_y']
 	return entrenador
 
 
@@ -30,7 +32,10 @@ def guardarPartida (entrenador_e, fichero = "PyokemonCLIsave.json"):
 		'nombre': e.nombre, 
 		'genero': e.genero,
 		'id': e.id,
-		'equipo': list_equipo}
+		'equipo': list_equipo,
+		'mapa': e.mapa,
+		'coord_x': e.x,
+		'coord_y': e.y}
 	
 	with open(fichero, 'w') as outfile:  
 		json.dump(str_fichero, outfile)
@@ -45,6 +50,9 @@ class Entrenador:
 		self.genero = t_genero
 		self.id 		= id
 		self.equipo = equipo_Pokemon 
+		self.mapa = "route1"
+		self.x = 22
+		self.y = 6
 
 
 	def equipar (self, Pokemon_p):
@@ -77,9 +85,12 @@ class Entrenador:
 			# 	str_equipo += str("\n".join(self.equipo[i].list()))
 
 
-		return ("Nombre: " + self.nombre 	+ '\n' 
-					  "Género: " + str_genero 	+ '\n' 
-					 	"ID:     " + str_id 			+ '\n' 
+		return ("Nombre: "  + self.nombre 		+ '\n' 
+					  "Género: "  + str_genero 			+ '\n' 
+					 	"ID:     "  + str_id 					+ '\n' 
+					 	"Mapa:    " + str(self.mapa) 	+ '\n'
+					 	"Coord_x: " + str(self.x) 	 	+ '\n'
+					 	"Coord_y: " + str(self.y) 		+ '\n'
 					 	"--- Equipo ---\n" + str_equipo)
 
 
@@ -170,6 +181,7 @@ class Entrenador:
 
 # #guardarPartida(e)
 # e = cargarPartida()
+# print(e)
 
 # mov = e.equipo[0].atacarIA(e.equipo[1])
 # print(e.equipo[0].nombre + " usó " + mov + " contra " + e.equipo[1].nombre)
