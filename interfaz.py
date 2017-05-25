@@ -1,10 +1,11 @@
 import os
+import time
+import sys
 from pokemon_db import *
 from pokemon_t import *
 from imagenToString import imgToStr
+from getch_py import getKey
 
-import time
-import sys
 
 def mecanografiar(texto, velocidad=0.10):
 	lista = texto.split()
@@ -39,7 +40,7 @@ def imprimeRival (Pokemon_r, tab_len=10):
 	str_vida = ('#' * b) + ('_' * (b_max-b))
 
 	# Obtener imagen delantera del pokemon, se supone que está en el directorio local
-	str_imagen = imgToStr((Pokemon_r.nombre + ".png").lower(), 35)
+	str_imagen = "\n" + imgToStr((Pokemon_r.nombre + ".png").lower(), 35)
 
 	# Indentar imagen
 	str_imagen = str_imagen.replace("\n", "\n" + '\t'*tab_len)
@@ -74,7 +75,8 @@ def imprimePokemon (Pokemon_p, tab_len=10):
 	print(str_box.replace("\n", ("\n" + '\t'*tab_len)))
 
 
-def menuCombate (ancho=70):
+# devuelve eleccion valida: 0, 1, 2, 3, o eleccion invalida: -1
+def imprimeMenuCombate (ancho=70):
 	print("#"*ancho)
 	print('#' + (' '*int(ancho/2-2)) + '#' + (' '*int(ancho/2-1)) + '#')
 	print('#' + " 0) LUCHAR".center(int(ancho/2-2)) + '#' + " 1) MOCHILA".center(int(ancho/2-1)) + '#') 
@@ -86,13 +88,19 @@ def menuCombate (ancho=70):
 	print("#"*ancho)
 
 	print("Su elección: ", end="")
-	eleccion = input()
-	return int(eleccion)
+	eleccion = getKey()
+	
+	try:
+		eleccion = int(eleccion)
+	except Exception as e:
+		eleccion = -1
+
+	return eleccion
 
 
 
-
-def menuAtaque (Pokemon_p, ancho=70):
+# devuelve eleccion valida: 0, 1, 2, 3, o eleccion invalida: -1
+def imprimeMenuAtaque (Pokemon_p, ancho=70):
 	p = Pokemon_p
 	print("#"*ancho)
 	print('#' + (' '*int(ancho/2-2)) + '#' + (' '*int(ancho/2-1)) + '#')
@@ -107,34 +115,53 @@ def menuAtaque (Pokemon_p, ancho=70):
 	print("#"*ancho)
 
 	print("Su elección: ", end="")
-	eleccion = input()
-	return int(eleccion)
+	eleccion = getKey()
+	
+	try:
+		eleccion = int(eleccion)
+	except Exception as e:
+		eleccion = -1
 
-
-
-
-
-
-
-
-
-
+	return eleccion
 
 
 def imprimeCombate (Pokemon_p, Pokemon_r):
+	p = Pokemon_p
+	r = Pokemon_r
 	os.system('clear')
 	imprimeRival(r)
 	imprimePokemon(p)
 
 
 
-def finCombate (Pokemon_p):
-	return Pokemon_p.ps <= 0
-
-
-def algoritmoCombate (Pokemon_p, Pokemon_r):
+def imprimeMenuSeleccionAtaque (Pokemon_p, Pokemon_r):
 	p = Pokemon_p
 	r = Pokemon_r
+
+	sel_atk = -1
+	str_atk = '-'
+	while (str_atk == '-'): # mientras ataque nulo
+		imprimeCombate(p, r)
+		try: 
+			sel_atk = imprimeMenuAtaque(p) # devuelve el ataque sleccionado
+		except Exception as e: # si se introduce un caracter raro
+			sel_atk = -1
+
+		if (sel_atk in [0, 1, 2, 3]): # ataque válido
+			str_atk = p.atacar(r, sel_atk)
+
+	mecanografiar(p.nombre + " usó " + str_atk + " contra pokémon " + r.nombre + " enemigo.")
+	time.sleep(0.25)
+
+	imprimeCuantoEfectivo(pe, pr, sel_atk)
+	getKey()
+
+
+
+
+
+
+
 
 
 
@@ -199,36 +226,185 @@ def strBoxEntrenador (Entrenador_e, orientacion=0, tab_len=0):
 
 
 
+
+# devuelve -1 si gana rival, 0 si empate, 1 si gana entrenador
+def algoritmoCombate (Pokemon_p, Pokemon_r, pkm_salvaje=True):
+	p = Pokemon_p
+	r = Pokemon_r
+	selec_menu = 0
+	max = 0 	# selección de movimiento del pokemon p
+	min = 0		# selección de movimiento del pokemon rival r
+	finCombate = False
+	intentosHuida = 0
+
+	while (not finCombate):
+		# Menú combate
+		while (True):
+			imprimeCombate(p, r)
+			print("¿Qué debería hacer " + p.nombre + "?")
+			selec_menu = imprimeMenuCombate()
+
+			if (selec_menu in [0, 1, 2, 3]):
+				break
+
+
+		########### NOTAAAA: HACER UN DIAGRAMA DE FLUJO A MI MANERA PARA ENTENDERLO MEJOR
+
+		# Menú ataque
+		if (selec_menu == 0):
+			while (True):
+				imprimeCombate(p, r)
+				print("¿Qué debería hacer " + p.nombre + "?")
+				max = imprimeMenuAtaque(p)
+
+				# Si se pulsa 'B'
+				if (max not in [0, 1, 2, 3]):
+					break
+
+				# Comprobar que el pokémon tenga PP en al menos un ataque
+				ataques_con_pp = [0, 1, 2, 3]
+				for i in range(0, 4):
+					if (p.movimientos[i].pp == 0):
+						ataques_con_pp.remove(i)
+
+
+				# Si ningún ataque del pokémon tiene PP, entonces este usará combate
+				again = False
+				if (len(ataques_con_pp) == 0): 
+					max = -1
+				else:
+					# Comprobar que el movimiento elegido tenga suficientes PP
+					# Los movimientos nulos no tienen PP, así que entran también por aquí
+					if (p.movimientos[max].pp <= 0):
+						mecanografiar("¡No quedan PP para este movimiento! ⏎")
+						again = True
+						getKey()
+				
+				# Determinar el orden de ataque en función de la velocidad:
+				if (p.velocidad > r.velocidad):
+					primero = p
+					segundo = r
+				elif (p.velocidad < r.velocidad):
+					primero = r
+					segundo = p
+				else: # (p.velocidad == r.velocidad)
+					suerte = random.randint(0,1)
+					if (suerte == 0):
+						primero = p
+						segundo = r
+					else:
+						primero = r
+						segundo = p
+
+				if (not again):
+					# Atacar
+					if (primero == p):
+						str_atk = p.atacar(r, max)
+						# Si el pokemon del entrenador realiza un movimiento, se resetea el contador de huidas
+						intentosHuida = 0
+						mecanografiar (p.nombre + " usó " + str_atk + ". ⏎")
+						getKey()
+						imprimeCuantoEfectivo(p, r, max)
+
+						if (r.ps <= 0):
+							return 0
+
+						str_atk = r.atacarIA(p)
+						mecanografiar ("Pokémon " + r.nombre + " enemigo usó " + str_atk + ". ⏎")
+						getKey()
+						imprimeCuantoEfectivo(p, r, max)
+
+					else:
+						str_atk = r.atacarIA(p)
+
+						if (r.ps <= 0):
+							return 0
+
+						if (p.ps <= 0):
+							return -1
+
+				break 
+				#
+
+
+		# Menú mochila
+		if (selec_menu == 1):
+			mecanografiar("La mochila aún no está implementada. ⏎")
+			getKey()
+
+		# Menú Equipo
+		if (selec_menu == 2):
+			mecanografiar("¡Este es tu último Pokémon! ⏎")
+			getKey()
+
+		# Menú Escapar
+		if (selec_menu == 3):
+			if (pkm_salvaje):
+				# A es la velocidad del Pokémon que quiere huir
+				# B es la velocidad del Pokémon oponente. Si B es 0 se cuenta como si fuera 1. 
+				# C es la cantidad de veces que el usuario ha intentado huir (contando la actual). 
+				# Se reinicia si el usuario realiza un movimiento. 
+				A = p.velocidad
+				B = r.velocidad
+				C = intentosHuida
+				if (B == 0):
+					B = 1
+				F = ((A * 128) / B + 30 * C) % 256 
+				# Se calcula un número aleatorio entre 0 y 255, y si es menor que F entonces escapa. 
+				exitoHuida = random.randint(0, 256) < F
+
+				if (exitoHuida):
+					mecanografiar("Escapaste sin problemas... ⏎")
+					getKey()
+					finCombate = True
+					# SALIR DEL COMBATE
+				else:
+					mecanografiar("¡No puedes huir del combate! ⏎")
+					intentosHuida += 1
+					getKey()
+
+			else:
+				mecanografiar("¡No puedes escapar de un combate contra un entrenador! ⏎")
+				getKey()
+
+
+
+
+
 def combateVSPokemonSalvaje (Entrenador_e, Pokemon_r):
+	e = Entrenador_e
+	r = Pokemon_r
 	os.system('clear')
 	# os.system("afplay music/"+str(Pokemon_r.numero)+"Cry.wav &");
-	imprimeRival(Pokemon_r)
-	imprimeEntrenadorBack(Entrenador_e)
+	imprimeRival(r)
+	imprimeEntrenadorBack(e)
 
 	mecanografiar("\n¡Pokémon " + r.nombre + " salvaje apareció! ⏎")
-	input();
+	getKey();
 
 
 	os.system('clear')
-	imprimeRival(Pokemon_r)
-	imprimeEntrenadorBack(Entrenador_e)
+	imprimeRival(r)
+	imprimeEntrenadorBack(e)
+	
 	# Entrenador saca a su primer pokémon no nulo no debilitado
-	pkm_elegido = -1
-	for i in range(0, len(Entrenador_e.equipo)):
-		if (Entrenador_e.equipo[i].nombre != '-' and Entrenador_e.equipo[i].ps > 0):
-			pkm_elegido = i
-			break
-
-	if (pkm_elegido ==  -1):
-		print("ERROR, EL ENTRENADOR NO TIENE POKÉMONS SANOS")
-		# SE LANZARIA UNA EXCEPCION
-
-	Pokemon_p = Entrenador_e.equipo[pkm_elegido]
+	Pokemon_p = e.sacarPokemon()
 	mecanografiar("\n¡Adelante, " + Pokemon_p.nombre + '! ⏎')
-	input();
+	getKey();
 
 	# os.system("afplay music/"+str(Pokemon_p.numero)+"Cry.wav &");
-	# algoritmoCombate()
+	ganador = algoritmoCombate(Pokemon_p, r)
+	
+	if (ganador == -1):
+		mecanografiar(Pokemon_p.nombre + " se debilitó. ⏎")
+		getKey()
+	elif (ganador == 1):
+		mecanografiar(pr.nombre + " enemigo se debilitó. ⏎")
+		getKey()
+
+
+
+
 
 
 
@@ -243,7 +419,7 @@ def combateVSEntrenador (Entrenador_e, Entrenador_r):
 	print(strBoxEntrenador(e, 1, 10))
 
 	mecanografiar("\n¡Entrenador Guay " + r.nombre + " quiere luchar! ⏎")
-	input();
+	getKey();
 
 	os.system('clear')
 	print(strBoxEntrenador(r))
@@ -252,33 +428,11 @@ def combateVSEntrenador (Entrenador_e, Entrenador_r):
 	print(strBoxEntrenador(e, 1, 10))
 
 	# Cada entrenador saca a su primer pokémon no nulo no debilitado
-	pkm_elegido = -1
-	for i in range(0, len(e.equipo)):
-		if (e.equipo[i].nombre != '-' and e.equipo[i].ps > 0):
-			pkm_elegido = i
-			break
-
-	if (pkm_elegido ==  -1):
-		print("ERROR, EL ENTRENADOR NO TIENE POKÉMONS SANOS")
-		# SE LANZARIA UNA EXCEPCION
-
-	Pokemon_pe = e.equipo[pkm_elegido]
-
-	pkm_elegido = -1
-	for i in range(0, len(r.equipo)):
-		if (r.equipo[i].nombre != '-' and r.equipo[i].ps > 0):
-			pkm_elegido = i
-			break
-
-	if (pkm_elegido ==  -1):
-		print("ERROR, EL ENTRENADOR NO TIENE POKÉMONS SANOS")
-		# SE LANZARIA UNA EXCEPCION
-
-	Pokemon_pr = r.equipo[pkm_elegido]
-
+	Pokemon_pe = e.sacarPokemon()
+	Pokemon_pr = r.sacarPokemon()
 
 	mecanografiar("\n¡Adelante, " + Pokemon_pe.nombre + '! ⏎')
-	input();
+	getKey();
 
 
 	# os.system("afplay music/"+str(Pokemon_pe.numero)+"Cry.wav &");
@@ -289,42 +443,21 @@ def combateVSEntrenador (Entrenador_e, Entrenador_r):
 
 
 	mecanografiar("\n¡Entrenador rival " + r.nombre + ' envió a ' + Pokemon_pr.nombre + '! ⏎')
-	input();
+	getKey();
 
 
 	# os.system("afplay music/"+str(Pokemon_pe.numero)+"Cry.wav &");
 	os.system('clear')
 	imprimePokemon(Pokemon_pr)
 	imprimePokemon(Pokemon_pe)
+	ganador = algoritmoCombate(pe, pr, False)
 
+	if (ganador == -1):
+		mecanografiar(pe.nombre + " se debilitó. ⏎")
+		getKey()
+	elif (ganador == 1):
+		mecanografiar(pr.nombre + " enemigo se debilitó. ⏎")
+		getKey()
 
-	# algoritmoCombate()
-
-
-
-
-# PRUEBAAASS
-from entrenador import *
-e = cargarPartida()
-r = Pokemon(1, 100)
-# el entrenador saca al primero del equipo
-p = e.equipo[0]  
-#p = Pokemon(383, 100)
-
-#combateVSPokemonSalvaje(e, r)
-combateVSEntrenador(e, e)
-
-
-str_a = '-'
-while (str_a == '-'): # mientras ataque nulo
-	imprimeCombate(p, r)
-	a = menuAtaque(p)
-	str_a = p.atacar(r, a)
-
-mecanografiar(p.nombre + " usó " + str_a + " contra pokémon " + r.nombre + " enemigo.")
-time.sleep(0.25)
-imprimeCuantoEfectivo(p, r, a)
-input()
-imprimeCombate(p, r)
 
 
