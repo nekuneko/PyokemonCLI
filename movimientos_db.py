@@ -59,7 +59,7 @@ class Movimiento:
 
 movimientos_db = {
 	'': 					Movimiento("-", 					NOTIPO, NOCATEGORIA, 	0, 0, 0),
-	'combate': 		Movimiento("Combate", 		NORMAL, FISICO,       50, 100, 1),
+	'combate': 		Movimiento("Combate", 		NORMAL, FISICO,       50, 100, 10),
 	'placaje': 		Movimiento("Placaje", 		NORMAL, FISICO, 			50, 100, 35),
 	'finta': 			Movimiento("Finta", 			SINIESTRO, FISICO, 		60, 100, 20),
 	'llamarada': 	Movimiento("Llamarada", 	FUEGO, FISICO, 				110, 85, 5),
