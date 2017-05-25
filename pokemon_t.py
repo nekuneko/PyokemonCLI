@@ -34,16 +34,19 @@ dic_tipo_inv = {
 # Categorias de Movimientos
 FISICO 			= 0
 ESPECIAL 		= 1
-NOCATEGORIA	= 2
+ESTADO      = 2
+NOCATEGORIA	= 3
 
 dic_categoria = {
 	FISICO: 		 'Físico',
 	ESPECIAL: 	 'Especial',
+	ESTADO: 		 'Estado',
 	NOCATEGORIA: ' '}
 
 dic_categoria_inv = {
 	'fisico': 	FISICO,
 	'especial': ESPECIAL,
+	'estado': 	ESTADO,
 	' ': 				NOCATEGORIA}
 
 # Género
