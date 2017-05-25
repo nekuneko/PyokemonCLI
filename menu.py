@@ -22,6 +22,15 @@ menu = 	[['*',  "###################",'*'],
 				 ['#',' ',"SALIR DEL JUEGO  ",'#'], 
 				 ['*',  "###################",'*']]
 
+menuPrincipal = [
+	['*',  "###################",'*'],
+	['#',' ',"                 ",'#'],
+	['#',' ',"  PyOkEmOn ClI   ",'#'],
+	['#',' ',"                 ",'#'],
+	['#',' ',"Nueva Partida 	 ",'#'], 
+	['#',' ',"Continuar        ",'#'], 
+	['*',  "###################",'*']]
+
 # opciones del menú principal
 options = {'help': 1,
 					 'pokedex': 2,
@@ -33,6 +42,10 @@ options = {'help': 1,
 cx = 1
 cy = 1
 menu[cx][cy] = '>'
+
+# cx = 5
+# cy = 1
+# menuPrincipal[cx][cy] = '>'
 
 
 # imprimir menú o información en recuadro, por defecto el menú principal
