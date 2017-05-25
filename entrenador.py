@@ -71,6 +71,21 @@ class Entrenador:
 
 
 
+	# Entrenador saca a su primer pokémon no nulo no debilitado
+	def sacarPokemon (self):
+		pkm_elegido = -1
+		for i in range(0, len(self.equipo)):
+			if (self.equipo[i].nombre != '-' and self.equipo[i].ps > 0):
+				pkm_elegido = i
+				break
+
+		if (pkm_elegido ==  -1):
+			print("ERROR, EL ENTRENADOR NO TIENE POKÉMONS SANOS")
+
+		return self.equipo[pkm_elegido]
+
+
+
 	def __str__ (self):
 		str_id = str(self.id)
 		str_genero = str(dic_genero[self.genero])
