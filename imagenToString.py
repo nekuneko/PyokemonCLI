@@ -3,11 +3,11 @@ import sys
 import ansi
 
 
-def load_and_resize_image(imgname, antialias, maxLen, aspectRatio):
+def load_and_resize_image(imgname, antialias, maxLen, aspectRatio, directory="img/"):
 	if aspectRatio is None:
 			aspectRatio = 1.0
 
-	img = Image.open(imgname)
+	img = Image.open(directory+imgname)
 
 	# force image to RGBA - deals with palettized images (e.g. gif) etc.
 	if img.mode != 'RGBA':
