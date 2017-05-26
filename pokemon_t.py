@@ -55,13 +55,15 @@ MACHO 		= 1
 CHICA 		= 2
 CHICO    	= 3
 NOGENERO 	= 4
+NOESPECIFICADO = 5
 
 dic_genero = {
 	HEMBRA: 	'♀',
 	MACHO: 		'♂',
 	CHICA:		'Chica',
 	CHICO: 		'Chico',
-	NOGENERO: ' '}
+	NOGENERO: ' ',
+	NOESPECIFICADO: ''}
 
 dic_genero_inv = {
 	'♀':			HEMBRA,
@@ -70,7 +72,8 @@ dic_genero_inv = {
 	'macho': 	MACHO,
 	'chica':	CHICA,
 	'chico':  CHICO,
-	' ': 			NOGENERO}
+	' ': 			NOGENERO,
+	'': 			NOESPECIFICADO}
 
 
 dic_sino =  {True: 'Sí', False: 'No'}
@@ -103,6 +106,9 @@ TablaEfectividad = {
 }
 
 
+
+# IMPRIMIR EQUIPO PODRÍA FALLAR
+# este metodo list es del de los movimientos o el de los pokemon
 def list_toString (lista, int_filas, int_columnas, int_ancho):
 	fil = int_filas
 	col = int_columnas
@@ -128,6 +134,9 @@ def list_toString (lista, int_filas, int_columnas, int_ancho):
 		str_lista += '\n'
 
 	return str_lista
+
+
+
 
 
 
