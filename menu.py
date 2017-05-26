@@ -3,7 +3,8 @@ import sys
 import copy
 from termcolor import colored
 import route1			
-
+from getch_py import *
+from pokemon import *
 
 help = 	[['*', "########################",'*'],
 	 			 ['#', "w - paso hacia adelante ",'#'],
@@ -63,7 +64,17 @@ def print_pokemon ():
 	print ("No hay pokémon que mostrar")
 
 def print_pokedex ():
-	print ("No se ha descubierto ningún pokémon")
+	if (len(pokemon_db) <= 1):
+		print ("No se ha descubierto ningún pokémon")
+	else: # Imprimir todos los pokémon de la base de datos
+		for i in range (1, max_pokemon+1):
+			if (str(i) in pokemon_db):
+				route1.clean_scr()
+				print(Pokemon(i))
+				print("Pulse e para salir u otra tecla para siguiente Pokémon")
+				if (getKey().lower() == 'e'):
+					print("Pulse otra tecla para salir.")
+					break;
 
 # salir del juego
 def exit_game ():
@@ -76,7 +87,7 @@ def next_move():
 
 	while True:
 		print_menu()
-		pressedkey = input() 
+		pressedkey = getKey()
 		if pressedkey == 'w':
 			if menu[cx-1][cy] == ' ': # hay opción arriba
 				# restore empty space
@@ -95,7 +106,7 @@ def next_move():
 				menu[cx][cy] = '>'
 				print_menu()
 
-		elif pressedkey == '':
+		else: # pressedkey == '\n':
 			if (menu[options['help']][1] == '>'):
 				print_menu(help)
 				input()
