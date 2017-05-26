@@ -14,3 +14,5 @@ presentacion/pokemonfont.zip
 *.jpg
 
 *.json
+
+pokemon_db.py
