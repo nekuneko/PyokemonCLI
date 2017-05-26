@@ -1,7 +1,7 @@
 from numpy import random
 from pokemon_t import *
 from movimientos_db import *
-from pokemon_db import *
+from pokemon import *
 import json
 
 
@@ -9,10 +9,13 @@ def cargarPartida (fichero = "PyokemonCLIsave.json"):
 	with open(fichero) as json_file:  
 		save = json.load(json_file)
 		equipo = []
-		for pokemon in save['equipo']:
-		 	equipo.append(setToPokemon(pokemon))
+		
+		entrenador = Entrenador(save['nombre'], save['genero'], save['id'])
 
-		entrenador = Entrenador(save['nombre'], save['genero'], save['id'], equipo)
+		# Equipar pokémon
+		for pokemon in save['equipo']:
+		 	entrenador.equipar(setToPokemon(pokemon))
+
 		#print(entrenador)
 		entrenador.mapa = save['mapa']
 		entrenador.x = save['coord_x']
@@ -54,6 +57,12 @@ class Entrenador:
 		self.x = 22
 		self.y = 6
 
+		# Quitar Pokemon que sobren
+		while(len(self.equipo_Pokemon) > 6):
+			self.equipo_Pokemon.pop()
+
+
+
 
 	def equipar (self, Pokemon_p):
 		bool_exito = False
@@ -61,8 +70,9 @@ class Entrenador:
 		# Captura al pokémon si es salvaje, asignandole el id del entrenador
 		if (Pokemon_p.id_entrenador == 0):
 			Pokemon_p.id_entrenador = self.id
+		# Sino no hace nada porque podría ser un pokémon de intercambio de otro jugador
 		
-		# Trata d emeter el pokémon en el equipo, si hay espacio, sino devuelve False
+		# Trata de meter el pokémon en el equipo, si hay espacio, sino devuelve False
 		if (len(self.equipo) <= 5):
 			self.equipo.append(Pokemon_p)
 			bool_exito = True
@@ -70,12 +80,30 @@ class Entrenador:
 		return bool_exito
 
 
+	def curarEquipo (self):
+		for i in range(0, len(self.equipo)):
+			self.equipo[i].restauraTodo()
 
-	# Entrenador saca a su primer pokémon no nulo no debilitado
+
+	def hayPokemonVivo (self):
+		bool_hayPokemonVivo = False
+
+		for i in range(0, len(self.equipo)): # Si hay un pokemon vivo que no sea nulo
+			if (self.equipo[i].ps > 0):
+				bool_hayPokemonVivo = True
+				break
+				
+		return bool_hayPokemonVivo
+
+
+	# Entrenador saca a su primer pokémon no nulo no debilitado,
+	# Verificar primero que haya un pokemon vivo con el metdoo hayPokemonVivo
+	# si no hay pokemon vivo lanzara una excepcion
 	def sacarPokemon (self):
 		pkm_elegido = -1
+
 		for i in range(0, len(self.equipo)):
-			if (self.equipo[i].nombre != '-' and self.equipo[i].ps > 0):
+			if (self.equipo[i].ps > 0):
 				pkm_elegido = i
 				break
 
@@ -83,6 +111,7 @@ class Entrenador:
 			print("ERROR, EL ENTRENADOR NO TIENE POKÉMONS SANOS")
 
 		return self.equipo[pkm_elegido]
+
 
 
 
@@ -119,9 +148,6 @@ class Entrenador:
 # # Pokémon Kyogre de tipo Agua al nivel 100 salvaje
 # #  ps, ataque, defensa, ataque_esp, defensa_esp, velocidad
 # # vector de 4 ataques
-# pokemon_db[382] = "Kyogre"
-# pokemon_db_t[382] = AGUA
-
 # kyogre = Pokemon(382, 100)
 # kyogre.setStatsBase(310, 205, 185, 305, 285, 185)
 # movimientos = {0: movimientos_db['ventisca'], 1: movimientos_db['surf'], 
@@ -144,9 +170,6 @@ class Entrenador:
 # 			 'ataque_esp': 285, 'defensa_esp': 205, 'velocidad': 185}	# <- 
 
 # formatearPokemon(pkm)
-# pokemon_db[numero] = pkm['nombre']
-# pokemon_db_t[numero] = pkm['tipo']
-
 # groudon = Pokemon(numero, nivel)
 # groudon.setStatsBase(pkm['ps'], pkm['ataque'], pkm['defensa'], pkm['ataque_esp'], pkm['defensa_esp'], pkm['velocidad'])
 # movimientos = {0: movimientos_db[''], 1: movimientos_db['rayo solar'],
