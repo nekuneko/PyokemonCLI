@@ -5,6 +5,12 @@ import menu
 from numpy import random
 from fabulous.color import blink, plain
 from colored import fg, bg, attr
+import modulo_zmq
+import modulo_dropbox
+from pokemon import *
+from getch_py import *
+from interfaz import *
+
 						
 				# 0   1   2   3   4   5   6   7   8   9  10   11  
 map = {	0:	['#',' ',' ',' ','#','x','x','#',' ',' ',' ','#'], 
@@ -110,7 +116,7 @@ def next_move (map):
 	last_battle = False
 
 	while True:
-		pressedkey = input() 
+		pressedkey = getKey()
 		player_moves = False
 
 		if pressedkey == 'w':
@@ -209,6 +215,9 @@ def next_move (map):
 		elif pressedkey == 'm':
 			menu.next_move()
 
+		else:
+			pass
+
 		# print map
 		update_map(map)
 
@@ -220,7 +229,24 @@ def next_move (map):
 				if (last_battle is True): # impedir enfrentamiento nada mas acabar un enfrentamiento
 					last_battle = False
 				else:
-					print("Un pokémon salvaje apareció")
-					input()
-					last_battle = True	
+					# generar pokémon aleatorio
+					int_numero = random.randint(1, 384)
+					int_nivel = random.randint(5, 100)
+
+					print("Un pokémon salvaje apareció ⏎")
+					getKey()
+
+					print("Identificando Pokemon" + blink("..."))
+					pkm = Pokemon(int_numero, int_nivel)
+					
+					print(pkm)
+					getKey()
+
+					modulo_zmq.publicarTwitter(pkm)
+
+					
+
+					algoritmoCombate(Pokemon(25, 100), pkm)
+
+					last_battle = True
 
