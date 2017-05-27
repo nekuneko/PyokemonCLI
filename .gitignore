@@ -22,3 +22,7 @@ pruebaInterfaz.py
 pruebaDropbox.py
 
 pruebaInterfaz.py
+
+*.wav
+
+*.mp3
