@@ -1,10 +1,10 @@
-import os
 import sys
 import copy
 from termcolor import colored
 import route1			
 from getch_py import *
 from pokemon import *
+from interfaz import *
 
 help = 	[['*', "########################",'*'],
 	 			 ['#', "w - paso hacia adelante ",'#'],
@@ -51,7 +51,7 @@ menu[cx][cy] = '>'
 
 # imprimir menú o información en recuadro, por defecto el menú principal
 def print_menu(menu = menu):
-	route1.clean_scr()
+	limpiarPantalla()
 	cmenu = copy.deepcopy(menu)
 	for fila in cmenu:
 		s = " ".join(fila)
@@ -69,7 +69,7 @@ def print_pokedex ():
 	else: # Imprimir todos los pokémon de la base de datos
 		for i in range (1, max_pokemon+1):
 			if (str(i) in pokemon_db):
-				route1.clean_scr()
+				limpiarPantalla()
 				print(Pokemon(i))
 				print("Pulse e para salir u otra tecla para siguiente Pokémon")
 				if (getKey().lower() == 'e'):
