@@ -1,15 +1,14 @@
-import os
-import platform
-import copy
-import menu
-from numpy import random
-from fabulous.color import blink, plain
-from colored import fg, bg, attr
-import modulo_zmq
-import modulo_dropbox
 from pokemon import *
 from getch_py import *
 from interfaz import *
+from numpy import random
+from fabulous.color import blink, plain
+from colored import fg, bg, attr
+import copy
+import menu
+import modulo_zmq
+import modulo_dropbox
+
 
 						
 				# 0   1   2   3   4   5   6   7   8   9  10   11  
@@ -94,17 +93,9 @@ def print_map (map):
 		print(" ".join(map[i]))
 
 
-# limpiar la pantalla
-def clean_scr():
-	if platform.system() == 'Windows':
-		os.system('cls')
-	else: # Linux || OSX
-		os.system('clear')
-
-
 # limpiar la pantalla e imprimir mapa coloreado
 def update_map (map):
-	clean_scr()
+	limpiarPantalla()
 	print_map(color_map(map))
 
 
@@ -240,13 +231,12 @@ def next_move (map):
 					pkm = Pokemon(int_numero, int_nivel)
 					
 					print(pkm)
-					getKey()
+					# getKey()
 
 					modulo_zmq.publicarTwitter(pkm)
 
-					
-
-					algoritmoCombate(Pokemon(25, 100), pkm)
+					## INCOMPLETO, Se crea un kyogre de la nada, debe ser el pokemon del entrenador
+					algoritmoCombate(Pokemon(382, 100), pkm)
 
 					last_battle = True
 
