@@ -43,10 +43,10 @@ class Movimiento:
 
 
 	# devuelve las propiedades del movimiento en formato lista
-	def list (self, l):
+	def list (self, l=8):
 		return 	[self.nombre,
 						"-"*l,
-						"Tipo:      " + dic_tipo[self.tipo],
+						"Tipo:      " + dic_tipo[self.tipo], 
 						"Categoría: " + dic_categoria[self.categoria],
 						"Potencia:  " + str(self.potencia),
 						"Precisión: " + str(self.precision),
@@ -55,22 +55,36 @@ class Movimiento:
 
 	# devuelve las propiedades del movimiento en formato cadena de caracteres
 	def __str__ (self):
-		return "\n".join(self.list())
+		return "\n".join(self.list()) + '\n'
 
 movimientos_db = {
-	'': 						Movimiento("-", 						NOTIPO, NOCATEGORIA, 	0, 0, 0),
-	'combate': 			Movimiento("Combate", 			NORMAL, FISICO,       50, 100, 10),
-	'placaje': 			Movimiento("Placaje", 			NORMAL, FISICO, 			50, 100, 35),
-	'latigo cepa': 	Movimiento("Látigo cepa", 	PLANTA, FISICO, 			45, 100, 15),
-	'hoja afilada':	Movimiento("Hoja afilada", 	PLANTA, FISICO, 			55, 95, 25),
-	'finta': 				Movimiento("Finta", 				SINIESTRO, FISICO, 		60, 100, 20),
-	'llamarada': 		Movimiento("Llamarada", 		FUEGO, FISICO, 				110, 85, 5),
-	'rayo solar': 	Movimiento("Rayo Solar", 		PLANTA, ESPECIAL, 		120, 100, 10),
-	'terremoto': 		Movimiento("Terremoto", 		TIERRA, FISICO, 			100, 100, 10),
-	'estallido':  	Movimiento("Estallido", 		FUEGO, ESPECIAL, 			150, 100, 5),
-	'ventisca': 		Movimiento("Ventisca", 			HIELO, ESPECIAL, 			110, 70, 5),
-	'surf':					Movimiento("Surf", 					AGUA, ESPECIAL, 			90, 100, 15),
-	'salpicar': 		Movimiento("Salpicar", 			AGUA, ESPECIAL, 			150, 100, 5),
-	'hidrobomba': 	Movimiento("Hidrobomba", 		AGUA, ESPECIAL, 			110, 80, 5),
-	'trueno': 			Movimiento("Trueno", 				ELECTRICO, ESPECIAL, 	110, 70, 10)}
+	'': 							Movimiento("-", 						NOTIPO, NOCATEGORIA, 	0, 0, 0),
+	'combate': 				Movimiento("Combate", 			NORMAL, FISICO,       50, 100, 10),
+	'ataque rapido': 	Movimiento("Ataque rápido", NORMAL, FISICO, 			40, 100, 30),
+	'placaje': 				Movimiento("Placaje", 			NORMAL, FISICO, 			50, 100, 35),
+	'golpe cabeza':		Movimiento("Gole cabeza", 	NORMAL, FISICO, 			70, 100, 15),
+	'poder oculto':		Movimiento("Poder oculto", 	NORMAL, ESPECIAL,			60, 100, 15),
+	'alboroto': 			Movimiento("Alboroto", 			NORMAL, ESPECIAL, 		90, 100, 10),
+	'hiperrayo':			Movimiento("Hiperrayo", 		NORMAL, ESPECIAL, 		150, 90, 5),
+	'chispa':					Movimiento("Chispa", 				ELECTRICO, FISICO, 		65, 100, 20),
+	'impactrueno':		Movimiento("Impactrueno", 	ELECTRICO, ESPECIAL, 	40, 100, 30),
+	'rayo':						Movimiento("Rayo", 					ELECTRICO, ESPECIAL, 	90, 100, 15),
+	'trueno': 				Movimiento("Trueno", 				ELECTRICO, ESPECIAL, 	110, 70, 10),
+	'psicorrayo': 		Movimiento("Psicorrayo", 		PSIQUICO, ESPECIAL, 	65, 100, 20),
+	'psiquico':				Movimiento("Psíquico",			PSIQUICO, ESPECIAL, 	90, 100, 10),
+	'psicoataque':		Movimiento("Psicoataque", 	PSIQUICO, ESPECIAL, 	140, 90, 5),
+	'latigo cepa': 		Movimiento("Látigo cepa", 	PLANTA, FISICO, 			45, 100, 15),
+	'hoja afilada':		Movimiento("Hoja afilada", 	PLANTA, FISICO, 			55, 95, 25),
+	'rayo solar': 		Movimiento("Rayo Solar", 		PLANTA, ESPECIAL, 		120, 100, 10),
+	'finta': 					Movimiento("Finta", 				SINIESTRO, FISICO, 		60, 100, 20),
+	'desarme':				Movimiento("Desarme", 			SINIESTRO, FISICO, 		65, 100, 20),
+	'llamarada': 			Movimiento("Llamarada", 		FUEGO, FISICO, 				110, 85, 5),
+	'ascuas':					Movimiento("Ascuas", 				FUEGO, ESPECIAL, 			40, 100, 25),
+	'estallido':  		Movimiento("Estallido", 		FUEGO, ESPECIAL, 			150, 100, 5),
+	'terremoto': 			Movimiento("Terremoto", 		TIERRA, FISICO, 			100, 100, 10),
+	'ventisca': 			Movimiento("Ventisca", 			HIELO, ESPECIAL, 			110, 70, 5),
+	'pistola agua':		Movimiento("Pistola agua", 	AGUA, ESPECIAL, 			40, 100, 25),
+	'surf':						Movimiento("Surf", 					AGUA, ESPECIAL, 			90, 100, 15),
+	'salpicar': 			Movimiento("Salpicar", 			AGUA, ESPECIAL, 			150, 100, 5),
+	'hidrobomba': 		Movimiento("Hidrobomba", 		AGUA, ESPECIAL, 			110, 80, 5)}
 
