@@ -3,20 +3,27 @@ import json
 
 # Las funciones init se auto inician, así que no es necesario llamarlas de forma explicita
 # pero en cambio SI ES NECESARIO CAMBIAR LA IP Y EL PUERTO AQUI SI FUERA NECESARIO
-GLOBAL_STR_IP 		= "10.182.106.194"
-GLOBAL_STR_PUERTO = "6969"
+TWITTER_STR_IP 			= "10.182.106.194"
+TWITTER_STR_PUERTO 	= "6969"
+SCRAPY_STR_IP 			= "10.182.108.214"
+SCRAPY_STR_PUERTO		= "6900"
 
-def initTwitter (str_ip=GLOBAL_STR_IP, str_puerto=GLOBAL_STR_PUERTO):
+def initTwitter (str_ip=TWITTER_STR_IP, str_puerto=TWITTER_STR_PUERTO):
 	global contextTwitter
 	global socketTwitter
+	global bool_twitterIniciado 
+	bool_twitterIniciado = True
 
 	contextTwitter 	= zmq.Context()
 	socketTwitter 	= contextTwitter.socket(zmq.PUSH)
 	socketTwitter.connect("tcp://"+str(str_ip)+':'+str(str_puerto))
 
-def initBusqueda (str_ip=GLOBAL_STR_IP, str_puerto=GLOBAL_STR_PUERTO):
+def initScrapy (str_ip=SCRAPY_STR_IP, str_puerto=SCRAPY_STR_PUERTO):
 	global contextBusqueda
 	global socketBusqueda
+	global bool_scrapyIniciado 
+
+	bool_scrapyIniciado = True
 	contextBusqueda = zmq.Context()
 	socketBusqueda = contextBusqueda.socket(zmq.PUSH)	
 	socketBusqueda.connect("tcp://"+str(str_ip)+':'+str(str_puerto))
@@ -26,7 +33,12 @@ def initBusqueda (str_ip=GLOBAL_STR_IP, str_puerto=GLOBAL_STR_PUERTO):
 # Publicar algo en twitter relacionado con un pokémon, primero debe de haberse ejecutado
 # al menos una vez initTwitter()
 def publicarTwitter (Pokemon_p, str_msg = "¡Pokémon salvaje apareció!", password = "pepe"):
-	initTwitter()
+	# La inicialización solo se puede hacer una vez, sino el zmq se queda pillado.
+	try:
+		bool_twitterIniciado
+	except Exception as e:
+		initTwitter()
+
 	p_name 		= Pokemon_p.nombre
 	p_numero 	= Pokemon_p.numero
 	p_nivel 	= Pokemon_p.nivel
@@ -49,7 +61,12 @@ def publicarTwitter (Pokemon_p, str_msg = "¡Pokémon salvaje apareció!", passw
 # Buscar Pokemon con scrapy en máquina remota, primero debe haberse ejecutado al menos
 # una vez initBusqueda()
 def buscarPokemonDbx (int_numero):
-	initBusqueda()
+	# La inicialización solo se puede hacer una vez, sino el zmq se queda pillado.
+	try:
+		bool_scrapyIniciado
+	except Exception as e:
+		initScrapy()
+
 	socketBusqueda.send_string(str(int_numero))
 
 
