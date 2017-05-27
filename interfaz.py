@@ -7,6 +7,7 @@ from pokemon_t import *
 from imagenToString import imgToStr
 from getch_py import getKey
 from fabulous.color import blink, fg256
+from entrenador import *
 
 VOLVERAMENUANTERIOR = 10
 
@@ -62,10 +63,11 @@ def imprimePokemon (Pokemon_p, tab_len=10):
 
 	# El nombre y el nivel ocupan como maximo 30 caracteres
 	str_box = (
-		'\n     '+ ('#'* 32) +
-		'\n    ## ' + (Pokemon_p.nombre+' '+dic_genero[Pokemon_p.sexo]).ljust(20) + ("Nv: "+str(Pokemon_p.nivel)).ljust(8) + ' #' +
-		'\n  ####     PS: (' + str_vida + ') #' +
-		'\n' + '#'* 37)
+		'\n      '+ ('#'* 32) +
+		'\n     ## ' + (Pokemon_p.nombre+' '+dic_genero[Pokemon_p.sexo]).ljust(20) + ("Nv: "+str(Pokemon_p.nivel)).ljust(8) + ' #' +
+		'\n   ####     PS: (' + str_vida + ') #' +
+		'\n  ####           ' + (str(Pokemon_p.ps) + '/' + str(Pokemon_p.ps_max)).center(20) + '#'
+		'\n' + '#'* 38)
 	print(str_imagen)
 	print(str_box.replace("\n", ("\n" + '\t'*tab_len)))
 
@@ -125,7 +127,7 @@ def strBoxEntrenador (Entrenador_e, orientacion=0, tab_len=0):
 	# Colorear
 	str_box = str_box.replace('@', str(fg256('red', '@')))
 	str_box = str_box.replace('O', str(fg256('white', '@')))
-	str_box = str_box.replace('X', str(fg256('black', '#')))
+	str_box = str_box.replace('X', str(fg256('black', '@')))
 	return str_box
 
 
@@ -250,6 +252,13 @@ def imprimeEscenaCombate (Pokemon_p, Pokemon_r):
 
 
 
+def imprimeSacarPokemon (Pokemon_p, Pokemon_r):
+	print("¡Adelante, " + str(Pokemon_p.nombre) + "! " + str(blink('⏎')))
+	getKey()
+	imprimeCombate(Pokemon_p, Pokemon_r)
+	Pokemon_p.gritar()
+	time.sleep(2)
+
 
 
 
@@ -261,23 +270,19 @@ def imprimeEscenaInicial (Entrenador_e, PokemonEntrenador):
 	bool_esPokemon = False
 	bool_esEntrenador = False
 
-	limpiarPantalla()
+	imprimeAvistamiento(Entrenador_e, PokemonEntrenador)
+
 	# Si el objeto tiene el atributo movimientos, es un pokemon
 	try:
 		PokemonEntrenador.movimientos
-		# El pokémon grita cuando sale a combatir
-		imprimeRival(PokemonEntrenador)
 		PokemonEntrenador.gritar()
+		time.sleep(0.5)
 		bool_esPokemon = True
+	# Sino, el objeto es un entrenador
 	except Exception as e:
-		# Sino, el objeto es un entrenador
-		print(strBoxEntrenador(PokemonEntrenador))
-		imprimeEntrenador(PokemonEntrenador, 10)
 		bool_esEntrenador = True
 
-	# Imprime la parte de abajo, entrenador y barrra de pokébals
-	imprimeEntrenadorBack(Entrenador_e)
-	print(strBoxEntrenador(Entrenador_e, 1, 10))
+	
 
 	# INCOMPLETO, IMPLEMENTAR CLASES DE ENTRENADORES Y DESCARGAR IMAGENES
 	if (bool_esEntrenador):
@@ -291,16 +296,7 @@ def imprimeEscenaInicial (Entrenador_e, PokemonEntrenador):
 
 	# Entrenador saca a su primer pokémon no nulo no debilitado
 	Pokemon_p = Entrenador_e.sacarPokemon()
-	mecanografiar("\n¡Adelante, " + Pokemon_p.nombre + "! " + str(blink('⏎')))
-	getKey();
-
-
-	if (bool_esPokemon):
-		limpiarPantalla()
-		imprimeCombate(Pokemon_p, PokemonEntrenador)
-		# Pokemon elegido del entrenador grita cuando sale a combatir
-		Pokemon_p.gritar()
-		time.sleep(2)
+	imprimeSacarPokemon(Pokemon_p, PokemonEntrenador)
 		
 	return Pokemon_p
 
@@ -322,8 +318,8 @@ def primeroEnAtacar (Pokemon_p, Pokemon_r):
 			return False
 
 
-def imprimeEfectividad (int_efectividad = 1):
-	efectividad = int(int_efectividad)	
+def imprimeEfectividad (float_efectividad = 1):
+	efectividad = float(float_efectividad)	
 
 	if (efectividad == 2):
 		os.system("afplay music/superdamage.wav &");
@@ -337,68 +333,117 @@ def imprimeEfectividad (int_efectividad = 1):
 		os.system("afplay music/normaldamage.wav &");
 		pass
 	elif (efectividad == 0):
-		mecanografiar("No afecta a " + Pokemon_r.nombre + " enemigo... "+ str(blink('⏎')))
+		mecanografiar("No afectó al pokémon objetivo"+ str(blink('⏎')))
 		getKey()
 
 	
 
+# Devuelve True si el pokémon se ha debilitado y False en caso contrario
+# Al mismo tiempo mecanografia el resultado en función de si era enemigo o no
+def debilitado (Pokemon_p, esEnemigo = False):
+	if (Pokemon_p.ps <= 0):
+		Pokemon_p.gritar()
+		time.sleep(0.25)
+
+		if (esEnemigo):
+			mecanografiar(Pokemon_p.nombre + " enemigo se debilitó. "+ str(blink('⏎')))
+			getKey()
+		else:
+			mecanografiar(Pokemon_p.nombre + " se debilitó. "+ str(blink('⏎')))
+			getKey()
+
+		return True
+
+	else:
+		return False
+
 
 AUTOMATICO = 10
 # Ataca el pokémon del entrenador, con el movimiento int_ataque
+# Devuelve 0 si no lo derrota o 1 si consigue derrotarle
 def turnoPokemon (Pokemon_p, Pokemon_r, int_ataque=AUTOMATICO):
-		int_ataque = int(int_ataque)
+	int_ataque = int(int_ataque)
 
-		# Imprime el combate para limpiar la interfaz
-		imprimeCombate(Pokemon_p, Pokemon_r)
+	# Imprime el combate para limpiar la interfaz
+	imprimeCombate(Pokemon_p, Pokemon_r)
 
-		if (int_ataque == AUTOMATICO):
-			dic_resultado = Pokemon_p.atacarIA(Pokemon_r)
-		else:
-			dic_resultado = Pokemon_p.atacar(Pokemon_r, int_ataque)
+	if (int_ataque == AUTOMATICO):
+		dic_resultado = Pokemon_p.atacarIA(Pokemon_r)
+	else:
+		dic_resultado = Pokemon_p.atacar(Pokemon_r, int_ataque)
 
-		mecanografiar(str(Pokemon_p.nombre) + " usó " + str(dic_resultado['ataque']) + 
-									" contra pokémon " + str(Pokemon_r.nombre) + " enemigo. "+ str(blink('⏎')))
+	mecanografiar(str(Pokemon_p.nombre) + " usó " + str(dic_resultado['ataque']) + 
+								" contra pokémon " + str(Pokemon_r.nombre) + " enemigo. "+ str(blink('⏎')))
+	getKey()
+
+	# Imprime el combate para ver el efecto del ataque
+	imprimeCombate(Pokemon_p, Pokemon_r)
+
+	if (bool(dic_resultado['acierto'])):
+		imprimeEfectividad(float(dic_resultado['efectividad']))
+	else:
+		mecanografiar("Pero falló. " + str(blink('⏎')))
 		getKey()
 
-		# Imprime el combate para ver el efecto del ataque
-		imprimeCombate(Pokemon_p, Pokemon_r)
-
-		if (bool(dic_resultado['acierto'])):
-			imprimeEfectividad(int(dic_resultado['efectividad']))
-		else:
-			mecanografiar("Pero falló. " + str(blink('⏎')))
-			getKey()
-
+	ganador = 0
+	if (debilitado(Pokemon_r, True)):
+		ganador = 1
+	return ganador
 
 AUTOMATICO = 10
 # Ataca el pokémon rival, con el movimiento int_ataque
+# Devuelve 0 si no lo derrota o -1 si consigue derrotarle
 def turnoRival (Pokemon_r, Pokemon_p, int_ataque=AUTOMATICO):
-		int_ataque = int(int_ataque)
+	int_ataque = int(int_ataque)
 
-		if (int_ataque == AUTOMATICO):
-			dic_resultado = Pokemon_r.atacarIA(Pokemon_p)
-		else:
-			dic_resultado = Pokemon_r.atacar(Pokemon_p, int_ataque)
+	# Imprime el combate para limpiar la interfaz
+	imprimeCombate(Pokemon_p, Pokemon_r)
 
-		mecanografiar("Pokemon " + str(Pokemon_r.nombre) + " enemigo usó " + 
-									str(dic_resultado['ataque']) + ". " + str(blink('⏎')))
+	if (int_ataque == AUTOMATICO):
+		dic_resultado = Pokemon_r.atacarIA(Pokemon_p)
+	else:
+		dic_resultado = Pokemon_r.atacar(Pokemon_p, int_ataque)
+
+	mecanografiar("Pokemon " + str(Pokemon_r.nombre) + " enemigo usó " + 
+								str(dic_resultado['ataque']) + ". " + str(blink('⏎')))
+	getKey()
+
+	# Imprime el combate para ver el efecto del ataque
+	imprimeCombate(Pokemon_p, Pokemon_r)
+
+	if (bool(dic_resultado['acierto'])):
+		imprimeEfectividad(float(dic_resultado['efectividad']))
+	else:
+		mecanografiar("Pero falló. "+ str(blink('⏎')))
 		getKey()
 
-		# Imprime el combate para ver el efecto del ataque
-		imprimeCombate(Pokemon_p, Pokemon_r)
-
-		if (bool(dic_resultado['acierto'])):
-			imprimeEfectividad(int(dic_resultado['efectividad']))
-		else:
-			mecanografiar("Pero falló. "+ str(blink('⏎')))
-			getKey()
+	ganador = 0
+	if (debilitado(Pokemon_p)):
+		ganador = -1
+	return ganador
 
 
 
+
+
+# FALLO PARA EL FUTURO: UN ENTRENADOR NO PUEDE LLAMARSE NULL
 # devuelve -1 si gana rival, 0 si empate, 1 si gana entrenador
-def algoritmoCombate (Pokemon_p, Pokemon_r):
+def algoritmoCombate (Pokemon_p, Pokemon_r, Entrenador_e=Entrenador("null"), cambio=False):
+
+	ganador = 0
 	finCombate = False
 	intentosHuida = 0
+
+	# Si se cambió de pokémon anteriormente
+	if (cambio):
+		# Es el turno del rival, ataque automático
+		ganador = turnoRival(Pokemon_r, Pokemon_p)
+		
+		# ¿Ha derrotado el enemigo al pokémon?
+		if (ganador == -1):
+			finCombate = True
+			
+
 	while (not finCombate):
 		
 		# Escena de Combate: imprimeRival, imprimePokemon y menuCombate
@@ -419,36 +464,35 @@ def algoritmoCombate (Pokemon_p, Pokemon_r):
 				# El pokémon del entrenador es más veloz
 				if (primeroEnAtacar(Pokemon_p, Pokemon_r)):
 					# Turno del pokemon del entrenador
-					turnoPokemon(Pokemon_p, Pokemon_r, int_ataque)
+					ganador = turnoPokemon(Pokemon_p, Pokemon_r, int_ataque)
 
 					# ¿Ha derrotado al rival?
-					if (Pokemon_r.ps <= 0):
+					if (ganador == 1):
 						finCombate = True
-						ganador = 1
-					else: # Turno del rival, ataque automático
-						turnoRival(Pokemon_r, Pokemon_p)
 
-						# ¿Ha derrotado al Pokémon del entrenador?
-						if (Pokemon_p.ps <= 0):
+					else: # Turno del rival, ataque automático
+						ganador = turnoRival(Pokemon_r, Pokemon_p)
+
+						# ¿Ha derrotado el enemigo al pokémon?
+						if (ganador == -1):
 							finCombate = True
-							ganador = -1
 
 				# EL pokémon del rival es más veloz
 				else:
 					# Turno del rival, ataque automático
-					turnoRival(Pokemon_r, Pokemon_p)
+					ganador = turnoRival(Pokemon_r, Pokemon_p)
 
-					# ¿Ha derrotado al Pokémon del entrenador?
-					if (Pokemon_p.ps <= 0):
+					# ¿Ha derrotado el enemigo al pokémon?
+					if (ganador == -1):
 						finCombate = True
-						ganador = -1
+
 					else: # Turno del pokemon del entrenador
-						turnoPokemon(Pokemon_p, Pokemon_r, int_ataque)
+						ganador = turnoPokemon(Pokemon_p, Pokemon_r, int_ataque)
 
 						# ¿Ha derrotado al rival?
-						if (Pokemon_r.ps <= 0):
+						if (ganador == 1):
 							finCombate = True
-							ganador = 1
+							
 
 			## VOLVER A ESCENA DE COMBATE
 
@@ -460,13 +504,57 @@ def algoritmoCombate (Pokemon_p, Pokemon_r):
 
 			## VOLVER A ESCENA DE COMBATE
 
+			##### RELLENO PARA SALTAR TURNO
+			# Es el turno del rival, ataque automático
+			turnoRival(Pokemon_r, Pokemon_p)
+
+			# ¿Ha derrotado al pokémon del entrenador?
+			if (Pokemon_p.ps <= 0):
+				finCombate = True
+				ganador = -1
+			##### RELLENO PARA SALTAR TURNO
+
 
 		# 2 - EQUIPO SELECCIONADO 
 		if (int_queHacer == 2):
-			mecanografiar("¡Este es tu último Pokémon! "+ str(blink('⏎')))
-			getKey()
+
+			if (Entrenador_e.nombre != "null"):
+				if (not Entrenador_e.hayPokemonVivo()):
+					mecanografiar("¡Este es tu último Pokémon! "+ str(blink('⏎')))
+					getKey()
+				else:
+					limpiarPantalla()
+					print(Entrenador_e.listarEquipo())
+					
+					try:
+						eleccion = int(getKey())
+						if (eleccion >= 0 and eleccion < len(Entrenador_e.equipo)):
+							if (Entrenador_e.equipo[eleccion].ps > 0):
+								if (Entrenador_e.equipo[eleccion] == Pokemon_p):
+									mecanografiar('¡' + str(Entrenador_e.equipo[eleccion].nombre) + 
+																" ya está combatiendo! "+ str(blink('⏎')))
+									getKey()
+								else:
+									imprimeCombate(Pokemon_p, Pokemon_r)
+									mecanografiar(Entrenador_e.nombre + " cambió de pokémon. "+ str(blink('⏎')))
+									getKey()
+
+									# Saca al pokemon 
+									Pokemon_p = Entrenador_e.equipo[eleccion]
+									imprimeSacarPokemon(Pokemon_p, Pokemon_r)
+
+									# Manda al pokemon a combatir
+									return algoritmoCombate(Pokemon_p, Pokemon_r, Entrenador_e, True)
+							else:
+								mecanografiar('¡' + str(Entrenador_e.equipo[eleccion].nombre) + 
+															" está debilitado, no puede combatir! "+ str(blink('⏎')))
+								getKey()
+					except Exception as e:
+						pass
+					
 
 			## VOLVER A ESCENA DE COMBATE
+
 
 
 		# 3 - HUIR SELECCIONADO
@@ -509,41 +597,99 @@ def algoritmoCombate (Pokemon_p, Pokemon_r):
 						ganador = -1
 
 			else:
-				mecanografiar("¡No puedes escapar de un combate contra un entrenador! ⏎")
+				mecanografiar("¡No puedes escapar de un combate contra un entrenador! "+ str(blink('⏎')))
 				getKey()
-
 
 	return ganador
 
 
 
+#		stats/cajaPokballs 			Pkm/Entrenador
+#		
+#   entrenador 							cajaPokballs
+def imprimeAvistamiento(Entrenador_e, PokemonEntrenador):
+	limpiarPantalla()
+
+	# El objeto es un Pokémon
+	try:
+		PokemonEntrenador.movimientos
+
+		Pokemon_r = PokemonEntrenador
+		imprimeRival(Pokemon_r)
+
+	# El objeto es un Entrenador
+	except Exception as e:
+		Entrenador_r = PokemonEntrenador
+		print(strBoxEntrenador(Entrenador_r))
+		imprimeEntrenador(Entrenador_r, 10)
+			
+	imprimeEntrenadorBack(Entrenador_e)
+	print(strBoxEntrenador(Entrenador_e, 1, 10))
+
+
 def combateVSPokemonSalvaje (Entrenador_e, Pokemon_r):
+	#Reproducir música de combate
+	os.system("afplay music/battle.mp3 &")
+	time.sleep(0.5)
 
 	# Imprime escena inicial y entrenador elige primer pokémon no debilitado del equipo
 	Pokemon_p = imprimeEscenaInicial(Entrenador_e, Pokemon_r)
-	ganador = algoritmoCombate(Pokemon_p, Pokemon_r)
-	
+	ganador = algoritmoCombate(Pokemon_p, Pokemon_r, Entrenador_e)
 
-	if (ganador == -1):
-		mecanografiar(Pokemon_p.nombre + " se debilitó. ⏎")
-		getKey()
-		if (Entrenador_e.hayPokemonVivo()):
-			print("¿Quieres sacar al siguiente pokémon?")
-			print("\t 0 - No")
-			print("\t 1 - Sí")
-			eleccion = getKey()
+	bool_continuarCombate = True
+	while (bool_continuarCombate):
+		if (ganador == -1):
+			if (Entrenador_e.hayPokemonVivo()):
+				eleccion = -1
+				while (eleccion != 0):
+					imprimeAvistamiento(Entrenador_e, Pokemon_r)
+					try:
+						print("¿Quieres sacar al siguiente pokémon?")
+						print(" 0 - No")
+						print(" 1 - Sí")
 
-			if (eleccion == 0):
-				print("Escapaste sin problemas")
+						eleccion = int(getKey())
+					except Exception as e:
+						# Elección inválida, volver a empezar
+						eleccion = 2
+
+					if (eleccion == 0):
+						os.system("afplay music/flee.wav &")
+						mecanografiar("Escapaste sin problemas. "+ str(blink('⏎')))
+						getKey()
+						bool_continuarCombate = False
+						
+
+					if (eleccion == 1):
+						imprimeAvistamiento(Entrenador_e, Pokemon_r)
+
+						# Volvemos a combatir con el siguiente pokémon
+						Pokemon_p = Entrenador_e.sacarPokemon()
+						imprimeSacarPokemon(Pokemon_p, Pokemon_r)
+						ganador = algoritmoCombate(Pokemon_p, Pokemon_r, Entrenador_e)
+						eleccion = 0
+			
+			# Al entrenador no le quedan más pokemon
 			else:
-				Pokemon_p = Entrenador_e.sacarPokemon()
-				pass
-		else:
-			print("A " + Entrenador_e.nombre)
-		
-	elif (ganador == 1):
-		mecanografiar(r.nombre + " enemigo se debilitó. ⏎")
-		getKey()
+				imprimeCombate(Pokemon_p, Pokemon_r)
+				mecanografiar("A " + Entrenador_e.nombre + " no le quedan más Pokémon. "+ str(blink('⏎')))
+				getKey()
+				mecanografiar(Entrenador_e.nombre + " corrió hacia el centro pokémon más cercano. " + str(blink('⏎')))
+				getKey()
+				Entrenador_e.curarEquipo()
+				bool_continuarCombate = False
+			
+		elif (ganador == 1):
+			os.system("pkill afplay") # quitar la musica que se esté reproduciendo
+			os.system("afplay music/victory.mp3 &")
+			time.sleep(3)
+			bool_continuarCombate = False
+
+		elif (ganador == 0):
+			bool_continuarCombate = False
+
+	# Quitar la música al salir
+	os.system("pkill afplay")
 
 
 
@@ -555,11 +701,7 @@ def combateVSEntrenador (Entrenador_e, Entrenador_r):
 	e = Entrenador_e
 	r = Entrenador_r
 
-	limpiarPantalla()
-	print(strBoxEntrenador(r))
-	imprimeEntrenador(r, 10)
-	imprimeEntrenadorBack(e)
-	print(strBoxEntrenador(e, 1, 10))
+	imprimeAvistamiento(Entrenador_e, Entrenador_r)
 
 	mecanografiar("\n¡Entrenador Guay " + r.nombre + " quiere luchar! ⏎")
 	getKey();
@@ -574,8 +716,7 @@ def combateVSEntrenador (Entrenador_e, Entrenador_r):
 	Pokemon_pe = e.sacarPokemon()
 	Pokemon_pr = r.sacarPokemon()
 
-	mecanografiar("\n¡Adelante, " + Pokemon_pe.nombre + '! ⏎')
-	getKey();
+	imprimeSacarPokemon(Pokemon_pe, Pokemon_pr)
 
 
 	# os.system("afplay music/"+str(Pokemon_pe.numero)+"Cry.wav &");
