@@ -18,15 +18,15 @@ def listarArchivos ():
 	# listar los archivos
 	files = dbx.files_list_folder("")
 
-	l_pkm = []
-	for file in files.entries:
-		l_pkm.append(file.name)
+	# l_pkm = []
+	# for file in files.entries:
+	# 	l_pkm.append(file.name)
 
 	# tener un array con los nombres
-	# file_names = [file.name for file in files.entries]
+	l_pkm = [file.name for file in files.entries]
 
-	for i in l_pkm:
-		i = i.replace(".jpg", "")
+	# for i in l_pkm:
+	# 	i = i.replace(".png", "")
 	
 	return l_pkm
 
@@ -38,16 +38,16 @@ def descargarArchivos (str_numero, str_directorio="img/"):
 	str_directorio 	= str(str_directorio)
 
 	# Descargar imagen delantera
-	path = "/" + str_numero + ".jpg" # esto es del dropbox
-	name =  str_numero + ".jpg" # nombre que quiera ponerle al descargamelo
+	path = "/" + str_numero + ".png" # esto es del dropbox
+	name =  str_numero + ".png" # nombre que quiera ponerle al descargamelo
 	dbx.files_download_to_file(name, path) # para bajarmelo
-	os.system("mv " + str_numero + ".jpg " + str_directorio)
+	os.system("mv " + str_numero + ".png " + str_directorio)
 
 	# Descargar imagen trasera
-	path = "/" + str_numero + "_t.jpg" # esto es del dropbox
-	name =  str_numero + "_t.jpg" # nombre que quiera ponerle al descargamelo
+	path = "/" + str_numero + "_t.png" # esto es del dropbox
+	name =  str_numero + "_t.png" # nombre que quiera ponerle al descargamelo
 	dbx.files_download_to_file(name, path) # para bajarmelo
-	os.system("mv " + str_numero + "_t.jpg " + str_directorio)
+	os.system("mv " + str_numero + "_t.png " + str_directorio)
 
 	# Descargar stats 
 	path = "/" + str_numero + ".json" # esto es del dropbox
