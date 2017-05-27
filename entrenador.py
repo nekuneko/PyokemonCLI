@@ -58,8 +58,8 @@ class Entrenador:
 		self.y = 6
 
 		# Quitar Pokemon que sobren
-		while(len(self.equipo_Pokemon) > 6):
-			self.equipo_Pokemon.pop()
+		while(len(self.equipo) > 6):
+			self.equipo.pop()
 
 
 
@@ -68,8 +68,8 @@ class Entrenador:
 		bool_exito = False
 
 		# Captura al pokémon si es salvaje, asignandole el id del entrenador
-		if (Pokemon_p.id_entrenador == 0):
-			Pokemon_p.id_entrenador = self.id
+		if (Pokemon_p.id == 0):
+			Pokemon_p.id = self.id
 		# Sino no hace nada porque podría ser un pokémon de intercambio de otro jugador
 		
 		# Trata de meter el pokémon en el equipo, si hay espacio, sino devuelve False
@@ -113,6 +113,8 @@ class Entrenador:
 		return self.equipo[pkm_elegido]
 
 
+	def listarEquipo (self):
+		return list_toString(self.equipo, 7, len(self.equipo), 24)
 
 
 	def __str__ (self):
@@ -124,7 +126,7 @@ class Entrenador:
 		if (len(self.equipo) == 0):
 			str_equipo = "No hay ningún Pokémon en el equipo.\n"
 		else: 
-			str_equipo = list_toString(self.equipo, 7, len(self.equipo), 24)
+			str_equipo = self.listarEquipo()
 			# for i in range(0, len(self.equipo)):
 			# 	str_equipo += str("\n".join(self.equipo[i].list()))
 

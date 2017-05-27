@@ -154,7 +154,7 @@
       "numero": 1,
       "nombre": "Bulbasaur",
       "tipo": 11,
-      "nivel": 5,
+      "nivel": 50,
       "id_entrenador": 18,
       "sexo": 1,
       "ps": 45,
@@ -197,10 +197,10 @@
           "pp": 0
         }
       ]
-    },
+    },    
     {
-      "numero": 382,
-      "nombre": "Kyogre",
+      "numero": 25,
+      "nombre": "Pikachu",
       "tipo": 1,
       "nivel": 100,
       "id_entrenador": 18,
@@ -213,60 +213,12 @@
       "velocidad": 185,
       "movimientos": [
         {
-          "nombre": "-",
+          "nombre": "rayo",
           "tipo": 18,
-          "categoria": 2,
-          "potencia": 0,
-          "precision": 0,
-          "pp": 0
-        },
-        {
-          "nombre": "-",
-          "tipo": 18,
-          "categoria": 2,
-          "potencia": 0,
-          "precision": 0,
-          "pp": 0
-        },
-        {
-          "nombre": "-",
-          "tipo": 18,
-          "categoria": 2,
-          "potencia": 0,
-          "precision": 0,
-          "pp": 0
-        },
-        {
-          "nombre": "-",
-          "tipo": 18,
-          "categoria": 2,
-          "potencia": 0,
-          "precision": 0,
-          "pp": 0
-        }
-      ]
-    },
-    {
-      "numero": 382,
-      "nombre": "Kyogre",
-      "tipo": 1,
-      "nivel": 100,
-      "id_entrenador": 18,
-      "sexo": 4,
-      "ps": 310,
-      "ataque": 205,
-      "defensa": 185,
-      "ataque_esp": 305,
-      "defensa_esp": 285,
-      "velocidad": 185,
-      "movimientos": [
-        {
-          "nombre": "-",
-          "tipo": 18,
-          "categoria": 2,
-          "potencia": 0,
-          "precision": 0,
-          "pp": 0
+          "categoria": 1,
+          "potencia": 100,
+          "precision": 100,
+          "pp": 10
         },
         {
           "nombre": "-",
