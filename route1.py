@@ -11,34 +11,34 @@ import modulo_dropbox
 
 
 						
-				# 0   1   2   3   4   5   6   7   8   9  10   11  
-map = {	0:	['#',' ',' ',' ','#','x','x','#',' ',' ',' ','#'], 
-				1:	['#','#','#','#','#',' ',' ','#','#','#','#','#'],
-				2:	['#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'],
-				3:	['#',' ',' ',' ','*',' ',' ',' ',' ',' ',' ','#'],
-				4:	['#','-','-','-','*','-','-','-',' ',' ',' ','#'],
-				5:	['*',' ',' ',' ','*','w','w','w','w','w','w','*'],
-				6:	['*',' ',' ',' ','*','w','w','w','w','w','w','*'],
-				7:	['*','-','-','-','*','w','w','w','w','w','w','*'],
-				8:	['*',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','*'],
-				9:	['*',' ',' ',' ',' ',' ',' ',' ','w','w','w','*'],
-				10:	['*','#','-','-','-','#','#','#','w','w','w','*'],	# ^
-				11:	['#',' ',' ',' ',' ',' ',' ',' ','w','w','w','#'],	# |
-				12:	['#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'],	# x
-				13:	['#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'],	# |
-				14:	['#',' ','-','-',' ','-','-','-','-','-','-','#'],	# v
-				15:	['#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'],
-				16:	['#',' ',' ',' ',' ',' ',' ','w','w','w',' ','#'],
-				17:	['#','*','*','*','*','*','*','w','w','w','-','#'],
-				18:	['#',' ',' ',' ',' ',' ',' ','w','w','w',' ','#'],
-				19:	['#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'],
-				20:	['#','-',' ',' ','i','-','-','-','-','-','-','#'],
-				21:	['*',' ','w','w','w',' ',' ',' ','w','w','w','*'],
-				22:	['*','w','w','w',' ',' ',' ','w','w','w',' ','*'],
-				23:	['*','#','#','#','#','w','w','#','#','#','#','*'],
-				24:	['*',' ',' ',' ','#','w','w','#',' ',' ',' ','*'],
-				25:	['*',' ',' ',' ','#','x','x','#',' ',' ',' ','*']}
-				# <-------------------------y------------------------>
+							# 0   1   2   3   4   5   6   7   8   9  10   11  
+mapa = {	0:	['#',' ',' ',' ','#','x','x','#',' ',' ',' ','#'], 
+					1:	['#','#','#','#','#',' ',' ','#','#','#','#','#'],
+					2:	['#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'],
+					3:	['#',' ',' ',' ','*',' ',' ',' ',' ',' ',' ','#'],
+					4:	['#','-','-','-','*','-','-','-',' ',' ',' ','#'],
+					5:	['*',' ',' ',' ','*','w','w','w','w','w','w','*'],
+					6:	['*',' ',' ',' ','*','w','w','w','w','w','w','*'],
+					7:	['*','-','-','-','*','w','w','w','w','w','w','*'],
+					8:	['*',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','*'],
+					9:	['*',' ',' ',' ',' ',' ',' ',' ','w','w','w','*'],
+					10:	['*','#','-','-','-','#','#','#','w','w','w','*'],	# ^
+					11:	['#',' ',' ',' ',' ',' ',' ',' ','w','w','w','#'],	# |
+					12:	['#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'],	# x
+					13:	['#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'],	# |
+					14:	['#',' ','-','-',' ','-','-','-','-','-','-','#'],	# v
+					15:	['#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'],
+					16:	['#',' ',' ',' ',' ',' ',' ','w','w','w',' ','#'],
+					17:	['#','*','*','*','*','*','*','w','w','w','-','#'],
+					18:	['#',' ',' ',' ',' ',' ',' ','w','w','w',' ','#'],
+					19:	['#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'],
+					20:	['#','-',' ',' ','i','-','-','-','-','-','-','#'],
+					21:	['*',' ','w','w','w',' ',' ',' ','w','w','w','*'],
+					22:	['*','w','w','w',' ',' ',' ','w','w','w',' ','*'],
+					23:	['*','#','#','#','#','w','w','#','#','#','#','*'],
+					24:	['*',' ',' ',' ','#','w','w','#',' ',' ',' ','*'],
+					25:	['*',' ',' ',' ','#','x','x','#',' ',' ',' ','*']}
+					# <-------------------------y------------------------>
 
 # casillas que no puede pisar el personaje
 forbidden_cell = {'wall':		'#',
@@ -56,12 +56,6 @@ element = {'empty': 	' ',
 
 # last element stepped by player
 last_step = element['empty']
-
-
-# player's initial coordinates
-px = 22
-py = 6
-map[px][py] = element['player']
 
 
 # colorear un mapa según los elementos, el color por defecto es el de la terminal
@@ -96,18 +90,28 @@ def print_map (map):
 # limpiar la pantalla e imprimir mapa coloreado
 def update_map (map):
 	limpiarPantalla()
+	print("  ----- Ruta  1 -----")
 	print_map(color_map(map))
 
 
 # siguiente movimiento del mapa
-def next_move (map):
+def next_move (Entrenador_e, map = mapa):
 	global px
 	global py
 	global last_step
-	last_battle = False
 
+	px = Entrenador_e.x
+	py = Entrenador_e.y
+
+	# player's initial coordinates
+	last_step 		= mapa[px][py]
+	mapa[px][py]	= element['player']
+
+
+	last_battle = False
 	while True:
-		pressedkey = getKey()
+		update_map(mapa)
+		pressedkey = str(getKey()).lower()
 		player_moves = False
 
 		if pressedkey == 'w':
@@ -173,44 +177,40 @@ def next_move (map):
 		elif pressedkey == 'e':
 			cell = map[px-1][py] # valdosa que haya en frente
 			if cell is element['post']:
-				print("¡Pistas para Entrenadores!", end="")
-				input()
-				print("Para entrar en el menú, pulsa M.", end="")
-				input()
+				mecanografiar("¡Pistas para Entrenadores!")
+				mecanografiar("Para entrar en el menú, pulsa M.")
 
 			elif cell is element['herb']:
-				print("Es una zona de hierba alta.", end="")
-				input()
-				print("¡Pueden aparecer pokémon salvajes!", end="")
-				input()
+				mecanografiar("Es una zona de hierba alta.")
+				mecanografiar("¡Pueden aparecer pokémon salvajes!")
 
 			elif cell is element['wall']:
-				print("Hay una pared delante.", end="")
-				input()
+				mecanografiar("Hay una pared delante.")
 
 			elif cell is element['jump']:
-				print("Puedo saltar esto desde el otro lado.", end="")
-				input()
+				mecanografiar("Puedo saltar esto desde el otro lado.")
 
 			elif cell is element['tree']:
-				print("Es un arbol.", end="")
-				input()
+				mecanografiar("Es un arbol.")
 
 			elif cell is element['close']:
-				print("El camino está cortado. Disculpen las molestias.", end="")
-				input()
+				mecanografiar("El camino está cortado. Disculpen las molestias.")
 
-			update_map(map)
+			update_map(mapa)
 
 
 		elif pressedkey == 'm':
-			menu.next_move()
+			# Antes de irme, restauro la posicion del jugador
+			map[px][py] = last_step
+			Entrenador_e.x = px
+			Entrenador_e.y = py
+			menu.next_move(Entrenador_e)
 
 		else:
 			pass
 
 		# print map
-		update_map(map)
+		update_map(mapa)
 
 		# si el entrador se mueve a una zona de hierba alta, 
 		# hay un 20% de probabilidad de que aparezca un pokémon salvaje
@@ -221,22 +221,19 @@ def next_move (map):
 					last_battle = False
 				else:
 					# generar pokémon aleatorio
-					int_numero = random.randint(1, 384)
+					int_numero = random.randint(1, MAX_POKEMON)
 					int_nivel = random.randint(5, 100)
 
-					print("Un pokémon salvaje apareció ⏎")
-					getKey()
-
-					print("Identificando Pokemon" + blink("..."))
+					mecanografiar("\nUn pokémon salvaje apareció")
+					print("Identificando Pokemon" + str(blink("...")))
 					pkm = Pokemon(int_numero, int_nivel)
 					
-					print(pkm)
+					#print(pkm)
 					# getKey()
 
 					modulo_zmq.publicarTwitter(pkm)
 
-					## INCOMPLETO, Se crea un kyogre de la nada, debe ser el pokemon del entrenador
-					algoritmoCombate(Pokemon(382, 100), pkm)
+					combateVSPokemonSalvaje(Entrenador_e, pkm)
 
 					last_battle = True
 
