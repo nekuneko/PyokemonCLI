@@ -141,6 +141,12 @@ def next_move(Entrenador_e):
 				mecanografiar("Partida guardada correctamente.")
 				
 			elif (menu[options['exit']][1] == '>'):
+				limpiarPantalla()
+				print("Fin de la Partida")
+				print("Gracias por jugar :D")
+				
+				# Guardar base de datos de pokemon y salir
+				pokemon.guardarBaseDatosPkm()
 				exit_game()
 
 			
