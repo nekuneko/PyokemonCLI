@@ -232,12 +232,9 @@ if (eleccion == NUEVAPARTIDA):
 		str_imagen = "\n" + imgToStr("chica.png", 50)
 	str_imagen = str_imagen.replace("\n", "\n" + '\t'*int_tab)
 	print(str_imagen)
-	mecanografiar(Entrenador_e.nombre + " ¡Tu propia leyenda POKéMON está a punto de comenzar!")
+	mecanografiar('¡'+Entrenador_e.nombre + "! ¡Tu propia leyenda POKéMON está a punto de comenzar!")
 	mecanografiar("¡Te espera un mundo de sueños y aventuras con los POKéMON!")
 	mecanografiar("¡Adelante!")
-
-
-	guardarPartida(Entrenador_e) 
 	musica.stop()
 
 

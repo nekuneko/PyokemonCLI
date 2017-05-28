@@ -5,10 +5,11 @@ import sys 			# utilizado en la función mecanografiar
 import musica
 from pokemon import *
 from pokemon_t import *
-from imagenToString import imgToStr
-from getch_py import getKey
-from fabulous.color import blink, fg256
 from entrenador import *
+from imagenToString import imgToStr
+from getch_py 			import getKey
+from fabulous.color import blink, fg256
+
 
 
 # limpiar la pantalla, independiente de cada sistema operativo
