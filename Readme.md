@@ -1,6 +1,8 @@
 ## PyokemonCLI
 
-Pequeño juego de Pokémon de línea de comandos creado con la intención de aprender programación orientada a objetos con el lenguaje de programación Python. Nace a partir del proyecto original "Pokémon CLI", constituyendo una evolución lógica y una expresión de la tecnología actualmente dominada por el autor. Utiliza la sintaxis de Python 3. Actualmente únicamente es compatible con OSX / macOS y con una ventana de terminal a una resolucion de 1600x900. Última versión: 30 de Mayo de 2017.
+Pequeño juego de Pokémon de línea de comandos creado con la intención de aprender programación orientada a objetos con el lenguaje de programación Python. Nace a partir del proyecto original "Pokémon CLI", constituyendo una evolución lógica así como una expresión de la tecnología dominada actualmente por el autor. Utiliza la sintaxis de Python 3. Actualmente únicamente es compatible con OSX / macOS y con una ventana de terminal a una resolucion de 1600x900. 
+
+- Última versión: 30 de Mayo de 2017.
 
 ## Se han empleado las siguientes librerías externas
 
