@@ -315,7 +315,7 @@ class Pokemon:
 			bool_usamosDropbox = True
 			try:
 				# Probar si se ha llamado a la función modulo_dropbox.initDropbox()
-				modulo_dropbox.bool_usaDropbox
+				bool_usamosDropbox = modulo_dropbox.bool_usaDropbox
 			except Exception as e:
 				# No está definido bool_usaDropbox, es que no usamos dropbox
 				# print(e)
