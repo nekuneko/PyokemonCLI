@@ -227,7 +227,7 @@ def next_move (Entrenador_e, map = mapa):
 					mecanografiar("\nUn pokémon salvaje apareció")
 					print("Identificando Pokemon" + str(blink("...")))
 					pkm = Pokemon(int_numero, int_nivel)
-					
+					#pkm = Pokemon(383, 50)
 					#print(pkm)
 					# getKey()
 
