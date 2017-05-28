@@ -230,14 +230,9 @@ print(Entrenador_e)
 getKey()
 
 
+# A la ruta 1
 route1.next_move(Entrenador_e)
 
-# # Guardar base de datos y salir
-# pokemon.guardarBaseDatosPkm()
-# input()
-# limpiarPantalla()
-# print("Fin de la Partida")
-# print("Gracias por jugar :D")
 
 
 
