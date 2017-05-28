@@ -140,11 +140,11 @@ def strBoxEntrenador (Entrenador_e, orientacion=0, tab_len=0):
 def imprimeMenuCombate (ancho=70):
 	print("#"*ancho)
 	print('#' + (' '*int(ancho/2-2)) + '#' + (' '*int(ancho/2-1)) + '#')
-	print('#' + " 0) LUCHAR".center(int(ancho/2-2)) + '#' + " 1) MOCHILA".center(int(ancho/2-1)) + '#') 
+	print('#' + " 0) LUCHA".center(int(ancho/2-2)) + '#' + " 1) MOCHILA".center(int(ancho/2-1)) + '#') 
 	print('#' + (' '*int(ancho/2-2)) + '#' + (' '*int(ancho/2-1)) + '#')
 	print("#"*ancho)
 	print('#' + (' '*int(ancho/2-2)) + '#' + (' '*int(ancho/2-1)) + '#')
-	print('#' + " 2) CAMBIAR POKEMON".center(int(ancho/2-2))  + '#' + " 3) ESCAPAR".center(int(ancho/2-1)) + '#') 
+	print('#' + " 2) POKéMON".center(int(ancho/2-2))  + '#' + " 3) HUIDA".center(int(ancho/2-1)) + '#') 
 	print('#' + (' '*int(ancho/2-2)) + '#' + (' '*int(ancho/2-1)) + '#')
 	print("#"*ancho)
 
@@ -260,7 +260,7 @@ def imprimeSacarPokemon (Pokemon_p, Pokemon_r):
 	mecanografiar("¡Adelante, " + str(Pokemon_p.nombre) + "!")
 	imprimeCombate(Pokemon_p, Pokemon_r)
 	Pokemon_p.gritar()
-	time.sleep(2)
+	time.sleep(1)
 
 
 
