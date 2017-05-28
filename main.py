@@ -149,9 +149,9 @@ def oak ():
 #### MAIN
 # Iniciar el módulo dropbox
 limpiarPantalla()
-# print("Iniciando Dropox...")
-# modulo_dropbox.initDropbox()
-# print("Dropbox iniciado.")
+print("Iniciando Dropbox...")
+modulo_dropbox.initDropbox()
+print("Dropbox iniciado.")
 
 # Cargar base de datos de pokémon Local
 cargarBaseDatosPkm()
