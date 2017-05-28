@@ -26,7 +26,7 @@ l_pokemonSinSexo.extend(l_pokemonLegendarios)
 
 # Quedan excluido Deoxys por tener más de 1 sprite en pokemondb.net
 # El último pokémon representable es Deoxys
-max_pokemon = 386 # solo pokemon del 0 al 386, 3ª generación
+MAX_POKEMON = 386 # solo pokemon del 0 al 386, 3ª generación
 
 # Si el pokémon está en la base de datos significa que tenemos:
 # número, nombre, statsBase, foto delantera, foto trasera, y sonido
@@ -93,17 +93,17 @@ pokemon_db = {
 	 		movimientoToSet(movimientos_db['psicorrayo']),
 	 		movimientoToSet(movimientos_db['finta'])]},
 
- "351": {
- 	'nombre': "Castform",
-	'tipo': NORMAL,
-	'stats': {
-			'ps': 70, 'ataque': 70, 'defensa': 70, 
-			'ataque_esp': 70, 'defensa_esp': 70, 'velocidad': 70},
-		'movimientos': [
- 		movimientoToSet(movimientos_db['placaje']),
- 		movimientoToSet(movimientos_db['pistola agua']),
- 		movimientoToSet(movimientos_db['ascuas']),
- 		movimientoToSet(movimientos_db['golpe cabeza'])]},
+	"351": {
+	 	'nombre': "Castform",
+		'tipo': NORMAL,
+		'stats': {
+				'ps': 70, 'ataque': 70, 'defensa': 70, 
+				'ataque_esp': 70, 'defensa_esp': 70, 'velocidad': 70},
+			'movimientos': [
+	 		movimientoToSet(movimientos_db['placaje']),
+	 		movimientoToSet(movimientos_db['pistola agua']),
+	 		movimientoToSet(movimientos_db['ascuas']),
+	 		movimientoToSet(movimientos_db['golpe cabeza'])]},
 
 	"382": {
 		'nombre': "Kyogre",
@@ -199,7 +199,6 @@ def añadirSetPkmBaseDatos (set_p):
 	stats  			= {'ps': ps, 'ataque': ataque, 'defensa': defensa, 
 								 'ataque_esp': ataque_esp, 'defensa_esp': defensa_esp, 'velocidad': velocidad}
 
-
 	# Formatear movimientos
 	movimientos = set_p['movimientos'] 
 	for i in range(0, len(movimientos)):
@@ -211,78 +210,53 @@ def añadirSetPkmBaseDatos (set_p):
 	pokemon_db[numero] = {'nombre': nombre, 'tipo': tipo, 'stats': stats, 'movimientos': movimientos}
 
 
-# def formatearPokemon (set_pkm):
-# 	pkm = set_pkm
-# 	pkm[0]['numero'] 			= int(pkm[0]['numero'])
-# 	pkm[0]['nombre'] 			= str(pkm[0]['nombre']).title()
-# 	pkm[0]['tipo']					= int(dic_tipo_inv[pkm[0]['tipo'].lower()])
-# 	pkm[0]['ps']						= int(pkm[0]['ps'])
-# 	pkm[0]['ataque']				= int(pkm[0]['ataque'])
-# 	pkm[0]['defensa']			= int(pkm[0]['defensa'])
-# 	pkm[0]['ataque_esp']		= int(pkm[0]['ataque_esp'])
-# 	pkm[0]['defensa_esp']	= int(pkm[0]['defensa_esp'])
-# 	pkm[0]['velocidad']		= int(pkm[0]['velocidad'])
-
-# 	print("todo correcto capitan")
-
-# 	try:
-# 		for i in range(0, 4):
-# 			formatearMovimiento(pkm[0]['movimientos'][i])
-
-# 		print("exploit peligroso")
-# 	except Exception as e:
-# 		print("ESCEPCION COMO UNA CASA")
-# 		pass
-
-	
-
-
 def pokemonToSet (Pokemon_p):
 	p = Pokemon_p
 
 	l_movimientos = []
 	for i in range(0, len(p.movimientos)):
-		l_movimientos.append(p.movimientos[i])
+		l_movimientos.append(movimientoToSet(p.movimientos[i]))
 
 	set_p = {
-		'numero': p.numero, 
-		'nombre': p.nombre,
-		'tipo': p.tipo,
-		'nivel': p.nivel,
-		'id_entrenador': p.id_entrenador,
-		'sexo': p.sexo,
-		'ps': p.ps_max,
-		'ataque': p.ataque,
-		'defensa': p.defensa,
-		'ataque_esp': p.ataque_esp,
-		'defensa_esp': p.defensa_esp,
-		'velocidad': p.velocidad,
+		'numero': 			int(p.numero), 
+		'nombre': 			str(p.nombre),
+		'tipo': 				int(p.tipo),
+		'nivel': 				int(p.nivel),
+		'id': 					int(p.id),
+		'sexo': 				int(p.sexo),
+		'ps': 					int(p.ps),
+		'ps_max': 			int(p.ps_max),
+		'ataque': 			int(p.ataque),
+		'defensa': 			int(p.defensa),
+		'ataque_esp': 	int(p.ataque_esp),
+		'defensa_esp': 	int(p.defensa_esp),
+		'velocidad': 		int(p.velocidad),
 		'movimientos': l_movimientos}
 
 	return set_p
 
 
 
-
-
-
-
-
-
 def setToPokemon (set_p):
 	p = set_p
-	Pkm = Pokemon(p['numero'], p['nivel'], p['id_entrenador'])
-	Pkm.tipo = p['tipo']
-	Pkm.sexo = p['sexo']
-	l_stats = {p['ps'], p['ataque'], p['defensa'], p['ataque_esp'], p['defensa_esp'], p['velocidad']}
-	Pkm.setStatsBase(p['numero'], p['nivel'], l_stats)
+
+	Pkm = Pokemon(int(p['numero']), int(p['nivel']), int(p['id']))
+	Pkm.tipo = int(p['tipo'])
+	Pkm.sexo = int(p['sexo'])
+	l_stats = {
+		'ps': int(p['ps_max']), 'ataque': int(p['ataque']), 'defensa': int(p['defensa']), 
+		'ataque_esp': int(p['ataque_esp']), 'defensa_esp': int(p['defensa_esp']), 
+		'velocidad': int(p['velocidad'])}
+
+	Pkm.setStatsBase(int(p['numero']), int(p['nivel']), l_stats)
 		
 	l_movimientos = []
 	for movimiento in p['movimientos']:
 		l_movimientos.append(setToMovimiento(movimiento))
 	Pkm.movimientos = l_movimientos
+	Pkm.ps = int(p['ps'])
 	
-	return Pkm;
+	return Pkm
 
 
 
@@ -300,7 +274,7 @@ class Pokemon:
 		# Establacer número de pokémon, si está fuera del rango representable será missigno
 		if (int_numero < 0):
 			self.numero = 0
-		elif (int_numero > max_pokemon):
+		elif (int_numero > MAX_POKEMON):
 			self.numero = 0
 		else:
 			self.numero = int_numero
@@ -348,16 +322,16 @@ class Pokemon:
 				bool_usamosDropbox = False
 
 			if (bool_usamosDropbox):
-				# Trato de buscar el pokémon en dropbox durante 1 minuto (5 segundos * 12)
+				# Trato de buscar el pokémon en dropbox durante 1 minuto (1 segundos * 60)
 				bool_pokemonEnDropbox = False
-				for i in range (0, 12):
+				for i in range (0, 20):
 					l_pkm = modulo_dropbox.listarArchivos() 	# Consulto la lista
 					if (str(self.numero) + ".png" in l_pkm): 	# si el pokémon está en dropbox, True
 						bool_pokemonEnDropbox = True
 						break																		# y me salgo del bucle
 					else:							
 						modulo_zmq.buscarPokemonDbx(self.numero) 	# mando petición de busqueda
-						time.sleep(5) 																	# espero 5 segundos
+						time.sleep(3) 														# espero 5 segundos
 					
 				# El pokémon está en dropbox
 				if (bool_pokemonEnDropbox): 
@@ -527,8 +501,8 @@ class Pokemon:
 		# Si hay hueco se aprende del tirón
 		bool_aprendido = False
 		for i in range(0, 4):
-			if (self.movimientos[i].nombre == '-'):
-				self.movimientos[i] = nuevoMovimiento
+			if (self.movimientos[i].nombre == ''):
+				self.movimientos[i] = copy.deepcopy(nuevoMovimiento)
 				bool_aprendido = True
 				break
 
@@ -624,17 +598,19 @@ class Pokemon:
 			# print(mov.nombre + " causó " + str(daño) + " puntos de daño.")
 
 
+			# ¿Acierta el ataque
+			suerte = random.randint(0, mov.precision)
 
-			# Aplicación del cálculo de daño
-			if (Pokemon_rival.ps <= daño):
-				Pokemon_rival.ps = 0
-			else:
-				Pokemon_rival.ps -= daño
-
-
-			if (daño > 0):
+			if (suerte < mov.precision):
 				bool_haAcertado = True
-				float_efectividad = float(E)
+
+				# Aplicación del cálculo de daño
+				if (Pokemon_rival.ps <= daño):
+					Pokemon_rival.ps = 0
+				else:
+					Pokemon_rival.ps -= daño
+
+			float_efectividad = float(E)
 
 			# Si el ataque no es combate, disminuyen los pp del ataque
 			if (mov.nombre != 'combate'):
@@ -755,7 +731,7 @@ class Pokemon:
 			"Salvaje: " + dic_sino[(self.id == 0)] + '\n'
 			"ID Entr: " + str(self.id) 		+ '\n'
 			"Sexo:    " + str(dic_genero[self.sexo]) 	+ '\n'
-			"----- Stats -----\n"
+			"\n----- Stats -----\n"
 			"Nivel:        " + str(self.nivel) 				+ '\n' 
 			"PS:           " + str(self.ps)						+ '\n'
 			"PS_MAX:       " + str(self.ps_max) 			+ '\n'
@@ -765,7 +741,7 @@ class Pokemon:
 			"Defensa Esp.: " + str(self.defensa_esp) 	+ '\n'
 			"Velocidad:    " + str(self.velocidad) 		+ '\n'
 			"-----------------\n"
-		 	"-- Movimientos --\n" + str_movimientos + '\n')
+		 	"\n-- Movimientos --\n" + str_movimientos + '\n')
 
 		return str_pokemon
 
