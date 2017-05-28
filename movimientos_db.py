@@ -20,15 +20,13 @@ def movimientoToSet (Movimiento_m):
 					'categoria': m.categoria,
 					'potencia':  m.potencia,
 					'precision': m.precision,
-					'pp': m.pp,
-					'pp_max': m.pp_max}
+					'pp': m.pp_max}
 
 def setToMovimiento (set_m):
 	m = set_m
-	mov = Movimiento(m['nombre'], m['tipo'], m['categoria'],m['potencia'], m['precision'], m['pp_max'])
-	mov.pp = m['pp']
+	return Movimiento(m['nombre'], m['tipo'], m['categoria'],
+										m['potencia'], m['precision'], m['pp'])
 
-	return mov
 
 class Movimiento:
 	# Constructor de Movimiento
