@@ -261,8 +261,9 @@ def imprimeEscenaCombate (Pokemon_p, Pokemon_r):
 
 def imprimeSacarPokemon (Pokemon_p, Pokemon_r):
 	mecanografiar("¡Adelante, " + str(Pokemon_p.nombre) + "!")
-	imprimeCombate(Pokemon_p, Pokemon_r)
 	musica.playWAV("sacar")
+	time.sleep(0.5)
+	imprimeCombate(Pokemon_p, Pokemon_r)
 	Pokemon_p.gritar()
 	time.sleep(1)
 
@@ -670,9 +671,14 @@ def combateVSPokemonSalvaje (Entrenador_e, Pokemon_r):
 			else:
 				imprimeCombate(Pokemon_p, Pokemon_r)
 				mecanografiar("A " + Entrenador_e.nombre + " no le quedan más Pokémon.")
+
 				mecanografiar(Entrenador_e.nombre + " corrió hacia el centro pokémon más cercano.")
 				Entrenador_e.curarEquipo()
+
+				limpiarPantalla()
+				musica.stop() # quitar la musica que se esté reproduciendo
 				musica.playWAV("pkmcenter")
+				mecanografiar("Enfermera Joy: ¡Tus pokémon se han recuperado satisfactoriamente!")
 				bool_continuarCombate = False
 			
 		elif (ganador == 1):

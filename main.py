@@ -246,8 +246,9 @@ if (eleccion == CONTINUAR):
 	print("Cargando partida " + str(blink("...")))
 	#Entrenador_e = cargarPartida("chica.json")
 	Entrenador_e = cargarPartida()
-	mecanografiar("Partida cargada correctamente.")
 	musica.playWAV("save")
+	mecanografiar("Partida cargada correctamente.")
+
 
 	limpiarPantalla()
 	print("Datos de la partida:")

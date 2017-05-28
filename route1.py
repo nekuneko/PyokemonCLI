@@ -238,7 +238,7 @@ def next_move (Entrenador_e, map = mapa):
 					int_numero = random.randint(1, MAX_POKEMON)
 					int_nivel = random.randint(5, 100)
 
-					mecanografiar("\nUn pokémon salvaje apareció")
+					print("\nUn pokémon salvaje apareció")
 					print("Identificando Pokemon" + str(blink("...")))
 					pkm = Pokemon(int_numero, int_nivel)
 					#pkm = Pokemon(383, 50)
