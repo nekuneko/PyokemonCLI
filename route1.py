@@ -251,7 +251,7 @@ def next_move (Entrenador_e, map = mapa):
 					bool_reproduciendo = False
 					combateVSPokemonSalvaje(Entrenador_e, pkm)
 					musica.playMP3("ruta101")
-
+					bool_reproduciendo = True
 					last_battle = True
 					
 
