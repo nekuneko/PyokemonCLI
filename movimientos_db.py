@@ -30,7 +30,7 @@ def setToMovimiento (set_m):
 
 class Movimiento:
 	# Constructor de Movimiento
-	def __init__ (self, str_nombre = "-", t_tipo = NOTIPO, t_categoria = NOCATEGORIA, 
+	def __init__ (self, str_nombre = '', t_tipo = NOTIPO, t_categoria = NOCATEGORIA, 
 								int_potencia = 0, int_precision = 0, int_pp = 0):
 		self.nombre 		= str_nombre
 		self.tipo 			= t_tipo
