@@ -218,6 +218,7 @@ def next_move(Entrenador_e):
 				print("No apagues la consola.")
 				guardarPartida(Entrenador_e)
 				mecanografiar("Partida guardada correctamente.")
+				musica.playWAV("save")
 				
 			elif (menu[options['exit']][1] == '>'):
 				limpiarPantalla()

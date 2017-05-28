@@ -160,6 +160,9 @@ def next_move (Entrenador_e, map = mapa):
 				# indicate that player has made a movement
 				player_moves = True
 
+				# Efecto de salto
+				musica.playWAV("jump")
+
 
 		elif pressedkey == 'a':
 			if map[px][py-1] in (element['empty'], element['herb']):
