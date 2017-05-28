@@ -117,6 +117,7 @@ def print_dropbox ():
 		limpiarPantalla()
 		print_menu(dropbox)
 		k = str(getKey()).lower()
+		musica.playWAV("click")
 
 		if (k == 'w'):
 			if dropbox[cx-1][cy] == ' ': # hay opción arriba
@@ -136,6 +137,7 @@ def print_dropbox ():
 				dropbox[cx][cy] = '>'
 
 		else: # Se pulsa una tecla
+			musica.playWAV("click")
 			# ACTIVAR
 			if dropbox[4][1] == '>':
 				limpiarPantalla()
@@ -175,6 +177,7 @@ def next_move(Entrenador_e):
 	while True:
 		print_menu()
 		pressedkey = str(getKey()).lower()
+		musica.playWAV("click")
 		if pressedkey == 'w':
 			if menu[cx-1][cy] == ' ': # hay opción arriba
 				# restore empty space
@@ -194,6 +197,7 @@ def next_move(Entrenador_e):
 				print_menu()
 
 		else: # pressedkey == '\n':
+			musica.playWAV("click")
 			if (menu[options['help']][1] == '>'):
 				print_menu(help)
 				getKey()
@@ -217,6 +221,7 @@ def next_move(Entrenador_e):
 				
 			elif (menu[options['exit']][1] == '>'):
 				limpiarPantalla()
+				musica.stop()
 				print("Fin de la Partida")
 				print("Gracias por jugar :D")
 

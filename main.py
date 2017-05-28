@@ -1,5 +1,6 @@
 import menu
 import route1
+import musica
 import modulo_dropbox
 from pokemon_t import *
 from entrenador import *
@@ -61,6 +62,8 @@ def introducirNombre ():
 			k = str(getKey()).lower()
 
 	limpiarPantalla()
+	mecanografiar("¡Bien! ¡Tu nombre es " + str(str_nombre) + "!")
+	limpiarPantalla()
 
 	return str_nombre
 
@@ -85,8 +88,12 @@ def introducirGenero ():
 
 def elegirPokemon ():
 	int_numero = 0
+	int_tab = 3
 	while (int_numero <= 0 or int_numero > MAX_POKEMON):
 		limpiarPantalla()
+		str_imagen = "\n" + imgToStr((str(25) + ".png").lower(), 50)
+		str_imagen = str_imagen.replace("\n", "\n" + '\t'*int_tab)
+		print(str_imagen)
 		print("¿Con qué pokémon te gustaría iniciar tu aventura?")
 		print("(Introduce un número del 1 al " + str(MAX_POKEMON) + ")")
 
@@ -169,6 +176,7 @@ cy = 1
 while (eleccion == -1):
 	imprimePortadaJuego()
 	k = str(getKey()).lower()
+	musica.playWAV("click")
 
 	if (k == 'w'):
 		if portadaJuego[cx-1][cy] == ' ': # hay opción arriba
@@ -187,6 +195,7 @@ while (eleccion == -1):
 			portadaJuego[cx][cy] = '>'
 
 	else: # Pulsa cualquier tecla, aceptar
+		musica.playWAV("click")
 		# NUEVA PARTIDA
 		if (portadaJuego[5][1] == '>'):
 			eleccion = NUEVAPARTIDA
@@ -203,9 +212,11 @@ while (eleccion == -1):
 limpiarPantalla()
 
 
+
 # EJECUTAR ELECCIÓN
 Entrenador_e = ""
 if (eleccion == NUEVAPARTIDA):
+	musica.playMP3("newgame")
 	oak()
 	str_nombre 		= introducirNombre()
 	int_genero 		= introducirGenero()
@@ -213,7 +224,21 @@ if (eleccion == NUEVAPARTIDA):
 	Entrenador_e 	= Entrenador(str_nombre, int_genero)
 	Entrenador_e.equipar(Pokemon(int_pokemon, 75))
 
+	limpiarPantalla()
+	int_tab = 3
+	if (Entrenador_e.genero == CHICO):
+		str_imagen = "\n" + imgToStr("chico.png", 30)
+	else:
+		str_imagen = "\n" + imgToStr("chica.png", 30)
+	str_imagen = str_imagen.replace("\n", "\n" + '\t'*int_tab)
+	print(str_imagen)
+	mecanografiar(Entrenador_e.nombre + " ¡Tu propia leyenda POKéMON está a punto de comenzar!")
+	mecanografiar("¡Te espera un mundo de sueños y aventuras con los POKéMON!")
+	mecanografiar("¡Adelante!")
+
+
 	guardarPartida(Entrenador_e) 
+	musica.stop()
 
 
 if (eleccion == CONTINUAR):
@@ -223,11 +248,10 @@ if (eleccion == CONTINUAR):
 	Entrenador_e = cargarPartida()
 	mecanografiar("Partida cargada correctamente.")
 
-
-limpiarPantalla()
-print("Datos de la partida:")
-print(Entrenador_e)
-getKey()
+	limpiarPantalla()
+	print("Datos de la partida:")
+	print(Entrenador_e)
+	getKey()
 
 
 # A la ruta 1

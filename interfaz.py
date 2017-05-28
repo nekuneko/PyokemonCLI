@@ -2,6 +2,7 @@ import os
 import platform # necesario para detectar windows
 import time
 import sys 			# utilizado en la función mecanografiar
+import musica
 from pokemon import *
 from pokemon_t import *
 from imagenToString import imgToStr
@@ -30,6 +31,8 @@ def mecanografiar(texto, velocidad=0.10):
 
 	print(str(blink('⏎')), end=" ")
 	input()
+	musica.playWAV("click")
+
 
 
 
@@ -323,13 +326,13 @@ def imprimeEfectividad (float_efectividad = 1):
 	efectividad = float(float_efectividad)	
 
 	if (efectividad == 2):
-		os.system("afplay music/superdamage.wav &");
+		musica.playWAV("superdamage")
 		mecanografiar("¡Es muy eficaz!")
 	elif (efectividad == 0.5):
-		os.system("afplay music/notverydamage.wav &");
+		musica.playWAV("notverydamage")
 		mecanografiar("No es muy eficaz...")
 	elif (efectividad == 1):
-		os.system("afplay music/normaldamage.wav &");
+		musica.playWAV("normaldamage")
 		pass
 	elif (efectividad == 0):
 		mecanografiar("No afectó al pokémon objetivo.")
@@ -574,7 +577,7 @@ def algoritmoCombate (Pokemon_p, Pokemon_r, Entrenador_e=Entrenador("null"), cam
 
 				# Hubo suerte y podemos huir
 				if (exitoHuida):
-					os.system("afplay music/flee.wav &")
+					musica.playWAV("flee")
 					mecanografiar("Escapaste sin problemas...")
 					finCombate = True
 					ganador = 0
@@ -624,8 +627,7 @@ def imprimeAvistamiento(Entrenador_e, PokemonEntrenador):
 
 def combateVSPokemonSalvaje (Entrenador_e, Pokemon_r):
 	#Reproducir música de combate
-	os.system("afplay music/battle.mp3 &")
-	time.sleep(0.5)
+	musica.playMP3("battle")
 
 	# Imprime escena inicial y entrenador elige primer pokémon no debilitado del equipo
 	Pokemon_p = imprimeEscenaInicial(Entrenador_e, Pokemon_r)
@@ -649,7 +651,7 @@ def combateVSPokemonSalvaje (Entrenador_e, Pokemon_r):
 						eleccion = 2
 
 					if (eleccion == 0):
-						os.system("afplay music/flee.wav &")
+						musica.playMP3("flee")
 						mecanografiar("Escapaste sin problemas.")
 						bool_continuarCombate = False
 						
@@ -672,8 +674,8 @@ def combateVSPokemonSalvaje (Entrenador_e, Pokemon_r):
 				bool_continuarCombate = False
 			
 		elif (ganador == 1):
-			os.system("pkill afplay") # quitar la musica que se esté reproduciendo
-			os.system("afplay music/victory.mp3 &")
+			musica.stop() # quitar la musica que se esté reproduciendo
+			musica.playMP3("victory")
 			imprimeAvistamiento(Entrenador_e, Pokemon_r)
 
 			if (Pokemon_p.nivel < 100):
@@ -688,7 +690,7 @@ def combateVSPokemonSalvaje (Entrenador_e, Pokemon_r):
 			bool_continuarCombate = False
 
 	# Quitar la música al salir
-	os.system("pkill afplay")
+	musica.stop()
 
 
 

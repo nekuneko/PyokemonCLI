@@ -6,6 +6,7 @@ from fabulous.color import blink, plain
 from colored import fg, bg, attr
 import copy
 import menu
+import musica
 import modulo_zmq
 import modulo_dropbox
 
@@ -54,8 +55,7 @@ element = {'empty': 	' ',
 					 **forbidden_cell}
 
 
-# last element stepped by player
-last_step = element['empty']
+
 
 
 # colorear un mapa según los elementos, el color por defecto es el de la terminal
@@ -94,11 +94,18 @@ def update_map (map):
 	print_map(color_map(map))
 
 
+
+
+# last element stepped by player
+last_step = element['empty']
+
+# Estado de la música de la ruta
+bool_reproduciendo = False
+
 # siguiente movimiento del mapa
 def next_move (Entrenador_e, map = mapa):
-	global px
-	global py
 	global last_step
+	global bool_reproduciendo
 
 	px = Entrenador_e.x
 	py = Entrenador_e.y
@@ -108,6 +115,10 @@ def next_move (Entrenador_e, map = mapa):
 	mapa[px][py]	= element['player']
 
 
+	# Reproducir musica de la ruta
+	if (bool_reproduciendo == False):
+		musica.playMP3("ruta101")
+		bool_reproduciendo = True
 	last_battle = False
 	while True:
 		update_map(mapa)
@@ -233,7 +244,11 @@ def next_move (Entrenador_e, map = mapa):
 
 					modulo_zmq.publicarTwitter(pkm)
 
+					musica.stop()
+					bool_reproduciendo = False
 					combateVSPokemonSalvaje(Entrenador_e, pkm)
+					musica.playMP3("ruta101")
 
 					last_battle = True
+					
 
