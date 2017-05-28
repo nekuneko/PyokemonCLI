@@ -3,9 +3,10 @@ from pokemon_t import *
 from movimientos_db import *
 from pokemon import *
 import json
+import copy
 
 
-def cargarPartida (fichero = "PyokemonCLIsave.json"):
+def cargarPartida (fichero="PyokemonCLIsave.json"):
 	with open(fichero) as json_file:  
 		save = json.load(json_file)
 		equipo = []
@@ -20,16 +21,19 @@ def cargarPartida (fichero = "PyokemonCLIsave.json"):
 		entrenador.mapa = save['mapa']
 		entrenador.x = save['coord_x']
 		entrenador.y = save['coord_y']
+
 	return entrenador
 
 
 
-def guardarPartida (entrenador_e, fichero = "PyokemonCLIsave.json"):
-	e = entrenador_e
+def guardarPartida (Entrenador_e, fichero="PyokemonCLIsave.json"):
+	e = Entrenador_e
 	
-	list_equipo =[]
+	list_equipo = []
 	for i in range(0, len(e.equipo)):
-		list_equipo.append(pokemonToSet(e.equipo[i])) 
+		p = pokemonToSet(e.equipo[i])
+		list_equipo.append(p) 
+
 
 	str_fichero = {
 		'nombre': e.nombre, 
@@ -40,6 +44,7 @@ def guardarPartida (entrenador_e, fichero = "PyokemonCLIsave.json"):
 		'coord_x': e.x,
 		'coord_y': e.y}
 	
+	#os.system("rm " + str(fichero))
 	with open(fichero, 'w') as outfile:  
 		json.dump(str_fichero, outfile)
 
@@ -48,12 +53,16 @@ def guardarPartida (entrenador_e, fichero = "PyokemonCLIsave.json"):
 
 class Entrenador:
 
-	def __init__  (self, str_nombre, t_genero = CHICO, id = random.randint(1, 2^32), equipo_Pokemon = []):
+	def __init__ (self, str_nombre, t_genero = CHICO, id = 0, equipo = []):
 		self.nombre = str_nombre
 		self.genero = t_genero
-		self.id 		= id
-		self.equipo = equipo_Pokemon 
-		self.mapa = "route1"
+		if (id == 0):
+			self.id = random.randint(1, 2^32)
+		else:
+			self.id = id
+		
+		self.equipo = copy.deepcopy(equipo) 
+		self.mapa = "ruta1"
 		self.x = 22
 		self.y = 6
 
@@ -66,15 +75,16 @@ class Entrenador:
 
 	def equipar (self, Pokemon_p):
 		bool_exito = False
+		p = copy.deepcopy(Pokemon_p)
 
 		# Captura al pokémon si es salvaje, asignandole el id del entrenador
-		if (Pokemon_p.id == 0):
-			Pokemon_p.id = self.id
+		if (p.id == 0):
+			p.id = self.id
 		# Sino no hace nada porque podría ser un pokémon de intercambio de otro jugador
 		
 		# Trata de meter el pokémon en el equipo, si hay espacio, sino devuelve False
 		if (len(self.equipo) <= 5):
-			self.equipo.append(Pokemon_p)
+			self.equipo.append(p)
 			bool_exito = True
 
 		return bool_exito
@@ -133,11 +143,11 @@ class Entrenador:
 
 		return ("Nombre: "  + self.nombre 		+ '\n' 
 					  "Género: "  + str_genero 			+ '\n' 
-					 	"ID:     "  + str_id 					+ '\n' 
-					 	"Mapa:    " + str(self.mapa) 	+ '\n'
-					 	"Coord_x: " + str(self.x) 	 	+ '\n'
-					 	"Coord_y: " + str(self.y) 		+ '\n'
-					 	"--- Equipo ---\n" + str_equipo)
+					 	"ID: "  		+ str_id 					+ '\n' 
+					 	"Mapa: " 		+ str(self.mapa) 	+ '\n'
+					 	#"Coord_x: " + str(self.x) 	 	+ '\n'
+					 	#"Coord_y: " + str(self.y) 		+ '\n'
+					 	"\n--- Equipo ---\n" + str_equipo)
 
 
 
