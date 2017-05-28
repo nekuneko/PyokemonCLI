@@ -144,9 +144,9 @@ def next_move(Entrenador_e):
 				limpiarPantalla()
 				print("Fin de la Partida")
 				print("Gracias por jugar :D")
-				
+
 				# Guardar base de datos de pokemon y salir
-				pokemon.guardarBaseDatosPkm()
+				guardarBaseDatosPkm()
 				exit_game()
 
 			
