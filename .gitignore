@@ -16,3 +16,5 @@ pruebaInterfaz.py
 pruebaDropbox.py
 
 pruebaEntrenador.py
+
+*.json
