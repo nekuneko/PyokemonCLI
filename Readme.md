@@ -39,14 +39,19 @@ Instalar la última versión de [Python3](https://www.python.org/). Instalar con
 + brew install mpg123
 
 
+Crear en el repositorio una carpeta llamada "img" e incluir en ella el contenido de la carpeta "static".
+
+
+Nota: Es necesario tener en el repositorio una carpeta llamada "sounds" con los gritos de todos los pokémon en formato .wav numerados del 1 al 386. Ejemplo: 1.wav, 28.wav, 128.wav...
+
 ## Uso
 
 Para ejecutar el programa, abra una terminal a pantalla completa en el directorio del repositorio y a continuación ejecute:
 
 + python3 main.py
 
-Los controles son los siguientes:
 
+Los controles son los siguientes:
 + w - Mover arriba
 + s - Mover abajo
 + a - Mover a la izquierda
