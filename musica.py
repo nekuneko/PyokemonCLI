@@ -9,6 +9,13 @@ def playWAV (str_sound):
 	os.system("afplay music/" + str(str_sound) + ".wav &")
 
 
-def stop():
+def stopMP3 ():
 	os.system("pkill mpg123")
+
+def stopWAV():
 	os.system("pkill afplay")
+
+	
+def stop():
+	stopMP3()
+	stopWAV()
