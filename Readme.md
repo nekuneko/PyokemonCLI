@@ -45,7 +45,7 @@ Instalar la última versión de [Python3](https://www.python.org/). Instalar con
 Crear en el repositorio una carpeta llamada "img" e incluir en ella el contenido de la carpeta "static".
 
 
-Nota: Es necesario tener en el repositorio una carpeta llamada "sounds" con los gritos de todos los pokémon en formato .wav numerados del 1 al 386. Ejemplo: 1.wav, 28.wav, 128.wav...
+Nota: Es necesario tener en el repositorio una carpeta llamada "sounds" con los gritos de todos los pokémon en formato .wav numerados del 1 al 386. Ejemplo: 1.wav, 28.wav, 128.wav... También deberá haber un archivo especial 0.wav para el grito del pokémon comodín MissignNo. que aparece cuando no se encuentra registrado el pokémon en dropbox o en la base de datos local.
 
 ## Uso
 
