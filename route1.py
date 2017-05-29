@@ -234,20 +234,23 @@ def next_move (Entrenador_e, map = mapa):
 				if (last_battle is True): # impedir enfrentamiento nada mas acabar un enfrentamiento
 					last_battle = False
 				else:
-					# generar pokémon aleatorio
+					# Generar pokémon aleatorio
 					int_numero = random.randint(1, MAX_POKEMON)
 					int_nivel = random.randint(5, 100)
 
-					print("\nUn pokémon salvaje apareció")
+					# Buscar pokémon en base de datos local o dropbox 
+					print("\n¡Un pokémon salvaje apareció!")
 					print("Identificando Pokemon" + str(blink("...")))
 					pkm = Pokemon(int_numero, int_nivel)
+
+					# DEPURACIÓN
 					#pkm = Pokemon(383, 50)
 					#print(pkm)
 					# getKey()
 
+					# Publicar en twitter los datos relativos al pokémon salvaje
 					modulo_zmq.publicarTwitter(pkm)
 
-					musica.stop()
 					bool_reproduciendo = False
 					combateVSPokemonSalvaje(Entrenador_e, pkm)
 					musica.playMP3("ruta101")

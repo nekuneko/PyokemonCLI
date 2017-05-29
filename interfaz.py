@@ -629,9 +629,15 @@ def imprimeAvistamiento(Entrenador_e, PokemonEntrenador):
 
 
 def combateVSPokemonSalvaje (Entrenador_e, Pokemon_r):
+	# Parar la música que se estuviera reproduciendo
+	musica.stop() 
+
+	# Reproducir intro de combate
+	musica.playWAV("battle")
+	time.sleep(2.5)
+
 	#Reproducir música de combate
 	musica.playMP3("battle")
-
 	# Imprime escena inicial y entrenador elige primer pokémon no debilitado del equipo
 	Pokemon_p = imprimeEscenaInicial(Entrenador_e, Pokemon_r)
 	ganador = algoritmoCombate(Pokemon_p, Pokemon_r, Entrenador_e)
@@ -684,8 +690,10 @@ def combateVSPokemonSalvaje (Entrenador_e, Pokemon_r):
 			
 		elif (ganador == 1):
 			musica.stop() # quitar la musica que se esté reproduciendo
-			musica.playMP3("victory")
+			musica.playWAV("victory")
+			time.sleep(1.3)
 			imprimeAvistamiento(Entrenador_e, Pokemon_r)
+			musica.playMP3("victory")
 
 			if (Pokemon_p.nivel < 100):
 				mecanografiar(str(Pokemon_p.nombre) + " ganó " + 
