@@ -4,7 +4,7 @@ Pequeño juego muy básico de línea de comandos inspirado en Pokémon creado co
 
 - Última versión: 30 de Mayo de 2017.
 
-## Se han empleado las siguientes librerías externas
+## Librerías externas
 
 + numpy			(Para operaciones matemáticas y generación de números aleatorios)
 + fabulous 	(Mejores colores que "colored")
@@ -14,7 +14,8 @@ Pequeño juego muy básico de línea de comandos inspirado en Pokémon creado co
 + copy 			(Para permitir el paso de parámetros por copia)
 + os 				(Para invocar comandos externos como limpiar la pantalla o reproducir música)
 + time 			(Para dormir el programa cuando es necesario)
-+ platform 	(Para detectar si )
++ platform 	(Para detectar si el sitema es Windows)
++ dropbox 	(Para hacer uso de la plataforma)
 
 ## Dependencias de programas externos
 
@@ -27,6 +28,30 @@ Pequeño juego muy básico de línea de comandos inspirado en Pokémon creado co
 + img2txt de @hit9 (http://github.com/hit9) Adapté este programa para poder imprimir las imágenes de los personajes en formato ascii en la terminal.
 + código rebautizado como "getch_py", que saqué de un post de stackoverflow.
 
-## Agradecimientos
+## Reconocimientos y agradecimientos
 
 A todos los creadores de las librerías anteriormente mencionadas, que sin ellos este proyecto no hubiera sido posible.
+
+
+## Instalación en OSX
+Instalar la última versión de [Python3](https://www.python.org/). Instalar con el comando "pip3 install" todas las librerías externas mencionadas en el apartado "Librerías externas". Ejemplo: "pip3 install numpy", sin las comillas. Para instalar mpg123 instale primero [Homebrew](https://brew.sh/index_es.html) y a continuación ejecute el comando:
+
++ brew install mpg123
+
+
+## Uso
+
+Para ejecutar el programa, abra una terminal a pantalla completa en el directorio del repositorio y a continuación ejecute:
+
++ python3 main.py
+
+Los controles son los siguientes:
+
++ w - Mover arriba
++ s - Mover abajo
++ a - Mover a la izquierda
++ d - Mover a la derecha
++ e - Interactuar (en el mapa)
++ m - Abrir el menú (en el mapa)
+
+Para aceptar o saltar los diálogos (⏎) basta con pulsar cualquier tecla.
