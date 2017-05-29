@@ -313,16 +313,7 @@ class Pokemon:
 
 		else: # Vale, el pokémon no estaba en la base de datos
 			# ¿Usamos el dropbox?
-			bool_usamosDropbox = True
-			try:
-				# Probar si se ha llamado a la función modulo_dropbox.initDropbox()
-				bool_usamosDropbox = modulo_dropbox.bool_usaDropbox
-			except Exception as e:
-				# No está definido bool_usaDropbox, es que no usamos dropbox
-				# print(e)
-				bool_usamosDropbox = False
-
-			if (bool_usamosDropbox):
+			if (modulo_dropbox.estaActivado()):
 				# Trato de buscar el pokémon en dropbox durante 1 minuto (1 segundos * 60)
 				bool_pokemonEnDropbox = False
 				for i in range (0, 20):

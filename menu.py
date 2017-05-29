@@ -103,8 +103,8 @@ def print_pokedex ():
 
 
 # salir del juego
-def exit_game ():
-	sys.exit(0)
+def exit_game (int_code = 0):
+	sys.exit(int(int_code))
 
 def print_dropbox ():
 	# cursor's initial position
@@ -151,11 +151,7 @@ def print_dropbox ():
 			elif dropbox[5][1] == '>':
 				limpiarPantalla()
 				print("Desactivando Dropbox...")
-				try:
-					modulo_dropbox.bool_usaDropbox = False
-				except Exception as e:
-					pass
-
+				modulo_dropbox.desactivar()
 				mecanografiar("Dropbox desactivado.")
 
 				k = 's' # No se sale del menú
