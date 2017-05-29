@@ -33,13 +33,13 @@ Pequeño juego muy básico de línea de comandos inspirado en Pokémon creado co
 A todos los creadores de las librerías anteriormente mencionadas, que sin ellos este proyecto no hubiera sido posible.
 
 
-## Instalación en OSX
+## Instalación en OSX
 Instalar la última versión de [Python3](https://www.python.org/). Instalar con el comando "pip3 install" todas las librerías externas mencionadas en el apartado "Librerías externas". Ejemplo: "pip3 install numpy", sin las comillas. Para instalar mpg123 instale primero [Homebrew](https://brew.sh/index_es.html) y a continuación ejecute el comando:
 
 + brew install mpg123
 
 
-## Uso
+## Uso
 
 Para ejecutar el programa, abra una terminal a pantalla completa en el directorio del repositorio y a continuación ejecute:
 
