@@ -10,6 +10,20 @@ from getch_py import getKey
 from imagenToString import imgToStr
 from pokemon import MAX_POKEMON, cargarBaseDatosPkm
 
+
+# Iniciar el módulo dropbox, activado por defecto para la presentación
+limpiarPantalla()
+print("Iniciando Dropbox...")
+modulo_dropbox.initDropbox()
+print("Dropbox iniciado.")
+
+# Iniciar el módulo de música, para desactivar comentar esta línea
+musica.initMusica()
+
+
+
+
+### NO TOCAR
 ancho = 19
 portadaJuego = [
 	['*','#'*ancho,'*'],
@@ -155,12 +169,6 @@ def oak ():
 
 			
 #### MAIN
-# Iniciar el módulo dropbox, activado por defecto para la presentación
-limpiarPantalla()
-print("Iniciando Dropbox...")
-modulo_dropbox.initDropbox()
-print("Dropbox iniciado.")
-
 # Cargar base de datos de pokémon Local
 cargarBaseDatosPkm()
 

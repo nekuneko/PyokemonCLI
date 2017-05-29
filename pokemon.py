@@ -7,6 +7,7 @@ from pokemon_t import *
 from movimientos_db import *
 import modulo_dropbox
 import modulo_zmq
+import musica
 
 
 
@@ -642,7 +643,8 @@ class Pokemon:
 
 
 	def gritar(self):
-		os.system("afplay sounds/"+str(self.numero)+".wav &");
+		musica.playWAV(str(self.numero), "sounds")
+		
 
 
 	def restaurarPP (self, int_mov, int_pp = -1):
