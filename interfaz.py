@@ -279,19 +279,17 @@ def imprimeEscenaInicial (Entrenador_e, PokemonEntrenador):
 	bool_esPokemon = False
 	bool_esEntrenador = False
 
-	imprimeAvistamiento(Entrenador_e, PokemonEntrenador)
-
 	# Si el objeto tiene el atributo movimientos, es un pokemon
 	try:
 		PokemonEntrenador.movimientos
 		PokemonEntrenador.gritar()
-		time.sleep(0.5)
 		bool_esPokemon = True
 	# Sino, el objeto es un entrenador
 	except Exception as e:
 		bool_esEntrenador = True
 
-	
+	imprimeAvistamiento(Entrenador_e, PokemonEntrenador)
+	time.sleep(0.5)
 
 	# INCOMPLETO, IMPLEMENTAR CLASES DE ENTRENADORES Y DESCARGAR IMAGENES
 	if (bool_esEntrenador):
