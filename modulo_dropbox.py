@@ -13,6 +13,30 @@ def initDropbox (str_token="6UFVrW8YL3EAAAAAAAAHsilYoLPNXvzLA5q1v8xCZymMFUdgi-dK
 	user 	= dbx.users_get_current_account()
 
 
+
+# devuelve True si el módulo está activado, False en caso contrario
+def estaActivado ():
+	global bool_usaDropbox
+	try:
+		# Probar si se ha llamado a la función modulo_dropbox.initDropbox()
+		bool_dropboxActivado = bool_usaDropbox
+	except Exception as e:
+		# No está definido bool_usaDropbox, es que no usamos dropbox
+		# print(e)
+		bool_dropboxActivado = False
+
+	return bool_dropboxActivado
+
+
+
+def desactivar ():
+	global bool_usaDropbox
+	try:
+		bool_usaDropbox = False
+	except Exception as e:
+		pass
+
+
 def listarArchivos ():
 	initDropbox()
 	# listar los archivos
@@ -29,6 +53,7 @@ def listarArchivos ():
 	# 	i = i.replace(".png", "")
 	
 	return l_pkm
+
 
 
 # INCOMPLETO, NO ESTÁ CONTEMPLADA LA COPIA EN WINDOWS
