@@ -70,7 +70,19 @@ pokemon_db = {
  	 		movimientoToSet(movimientos_db['ataque rapido']),
  	 		movimientoToSet(movimientos_db['rayo']),
  	 		movimientoToSet(movimientos_db['chispa'])]},
- 
+
+  "150": {
+ 		'nombre': "Mewtwo",
+		'tipo': PSIQUICO,
+		'stats': {
+ 			'ps': 106, 'ataque': 110, 'defensa': 90, 
+ 			'ataque_esp': 154, 'defensa_esp': 90, 'velocidad': 130},
+ 		'movimientos': [
+	 		movimientoToSet(movimientos_db['psicoataque']),
+	 		movimientoToSet(movimientos_db['psiquico']),
+	 		movimientoToSet(movimientos_db['confusion']),
+	 		movimientoToSet(movimientos_db['rapidez'])]},
+
  	"201": {
  		'nombre': "Unown",
 		'tipo': PSIQUICO,
