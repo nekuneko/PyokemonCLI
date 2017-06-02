@@ -12,10 +12,10 @@ from pokemon import MAX_POKEMON, cargarBaseDatosPkm
 
 
 # Iniciar el módulo dropbox, activado por defecto para la presentación
-limpiarPantalla()
-print("Iniciando Dropbox...")
-modulo_dropbox.initDropbox()
-print("Dropbox iniciado.")
+# limpiarPantalla()
+# print("Iniciando Dropbox...")
+# modulo_dropbox.initDropbox()
+# print("Dropbox iniciado.")
 
 # Iniciar el módulo de música, para desactivar comentar esta línea
 musica.initMusica()
