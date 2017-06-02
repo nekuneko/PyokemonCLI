@@ -658,7 +658,7 @@ def combateVSPokemonSalvaje (Entrenador_e, Pokemon_r):
 						eleccion = 2
 
 					if (eleccion == 0):
-						musica.playMP3("flee")
+						musica.playWAV("flee")
 						mecanografiar("Escapaste sin problemas.")
 						bool_continuarCombate = False
 						
