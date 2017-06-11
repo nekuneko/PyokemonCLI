@@ -9,6 +9,7 @@ from fabulous.color import blink, fg256
 from getch_py import getKey
 from imagenToString import imgToStr
 from pokemon import MAX_POKEMON, cargarBaseDatosPkm
+from numpy import random
 
 
 # Iniciar el módulo dropbox, activado por defecto para la presentación
@@ -231,11 +232,13 @@ if (eleccion == NUEVAPARTIDA):
 	int_genero 		= introducirGenero()
 	int_pokemon 	= elegirPokemon()
 	Entrenador_e 	= Entrenador(str_nombre, int_genero)
-	Entrenador_e.equipar(Pokemon(int_pokemon, 75))
 
-	# BORRA, INCOMPLETO, esto es solo para la demostracion de que se pueden cambiar pkm
-	# equipamos un missingno
-	Entrenador_e.equipar(Pokemon(0, 80))
+	limpiarPantalla()
+	print("Estamos atrapando al pokémon que has elegido, sé paciente" + str(blink("...")))
+	Entrenador_e.equipar(Pokemon(int_pokemon, 90)) # INCOMPLETO, BORRA, EL NIVEL?
+
+	# BORRA, INCOMPLETO, se genera un segundo pokémon adicional, aleatorio
+	Entrenador_e.equipar(Pokemon(random.randint(0, MAX_POKEMON+1), random.randint(5, 101)))
 
 	limpiarPantalla()
 	int_tab = 1
