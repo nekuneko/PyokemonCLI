@@ -8,6 +8,7 @@ Utiliza exclusívamente la sintaxis de **Python 3** y actualmente sólo es compa
 
 
 ## Librerías externas
++ **pillow**  	(Para el tratamiento de imágenes)
 + **numpy**			(Para operaciones matemáticas y generación de números aleatorios)
 + **fabulous** 	(Mejores colores que "colored")
 + **colored**		(Más facilidad de uso para colorear matrices de caracteres)
